@@ -9,7 +9,7 @@ Sprite::Sprite(){
 
 Sprite::Sprite(string file){
   texture = nullptr;
-  open(file);
+  open("res/img/" + file);
 }
 
 Sprite::~Sprite(){
