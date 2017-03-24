@@ -1,25 +1,34 @@
 #include "Game.h"
 
-Game::Game(string title, int width, int height){
+Game * Game::instance = nullptr;
+
+Game::Game(string title, int width, int height) : state(new State()){
+  instance = instance? instance : this;
+
   int sdl_init = SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER);
   if(sdl_init){
     printf("%s\n", SDL_GetError());
+    exit(-1);
   }
 
-  int img_init = IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG | IMG_INIT_TIF);
-  if(img_init != IMG_INIT_JPG | IMG_INIT_PNG | IMG_INIT_TIF){
+  int img_flags = IMG_INIT_JPG | IMG_INIT_PNG | IMG_INIT_TIF;
+  int img_init = IMG_Init(img_flags);
+  if(img_init != img_flags){
     printf("%s\n", SDL_GetError());
+    exit(-1);
   }
 
-  window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED,
+  window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED,
     SDL_WINDOWPOS_CENTERED, width, height, 0);
   if(window == nullptr){
     printf("%s\n", SDL_GetError());
+    exit(-1);
   }
 
-  renderer = SDL_CreateRenderer(-1);
+  renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
   if(renderer == nullptr){
     printf("%s\n", SDL_GetError());
+    exit(-1);
   }
 }
 
@@ -31,7 +40,15 @@ Game::~Game(){
 }
 
 void Game::run(){
+  state->load_assets();
+  while(state->quit_requested() == false){
+    state->update(1);
+    state->render();
 
+    SDL_RenderPresent(renderer);
+    SDL_Delay(33);
+
+  }
 }
 
 Game & Game::get_instance(){
@@ -42,6 +59,6 @@ State & Game::get_state(){
   return *state;
 }
 
-SDL_Renderer * get_renderer(){
+SDL_Renderer * Game::get_renderer(){
   return renderer;
 }
