@@ -33,6 +33,8 @@ Game::Game(string title, int width, int height) : state(new State()){
 }
 
 Game::~Game(){
+  delete state;
+
   IMG_Quit();
   SDL_DestroyRenderer(renderer);
   SDL_DestroyWindow(window);

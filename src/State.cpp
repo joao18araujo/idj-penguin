@@ -5,6 +5,10 @@ State::State(){
   background = new Sprite();
 }
 
+State::~State(){
+  delete background;
+}
+
 bool State::quit_requested(){
   return m_quit_requested;
 }

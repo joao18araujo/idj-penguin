@@ -6,6 +6,7 @@ class Sprite;
 class State{
 public:
   State();
+  ~State();
 
   bool quit_requested();
   void load_assets();
