@@ -1,3 +1,6 @@
+#ifndef FACE_H
+#define FACE_H
+
 #include "GameObject.h"
 #include "Sprite.h"
 
@@ -16,3 +19,5 @@ private:
   int hitpoints;
   Sprite sprite;
 };
+
+#endif

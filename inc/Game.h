@@ -1,6 +1,10 @@
+#ifndef GAME_H
+#define GAME_H
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <iostream>
+#include <vector>
 
 #include "State.h"
 
@@ -22,3 +26,5 @@ private:
   SDL_Renderer * renderer = nullptr;
   State * state;
 };
+
+#endif

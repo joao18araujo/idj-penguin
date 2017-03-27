@@ -19,3 +19,7 @@ void Face::render(){
 bool Face::is_dead(){
   return true;
 }
+
+void Face::take_damage(int damage){
+
+}

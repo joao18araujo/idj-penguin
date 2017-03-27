@@ -1,3 +1,6 @@
+#ifndef GAMEOBJECT_H
+#define GAMEOBJECT_H
+
 #include "Rectangle.h"
 
 class GameObject{
@@ -9,3 +12,5 @@ public:
 
   Rectangle box;
 };
+
+#endif

@@ -1,7 +1,16 @@
+#ifndef STATE_H
+#define STATE_H
+
 #include <SDL2/SDL.h>
 #include <iostream>
+#include <vector>
+#include <memory>
 
-class Sprite;
+#include "GameObject.h"
+#include "Sprite.h"
+
+using std::vector;
+using std::unique_ptr;
 
 class State{
 public:
@@ -12,8 +21,13 @@ public:
   void load_assets();
   void update(float delta);
   void render();
+  void input();
+  void add_object(float mouse_x, float mouse_y);
 
 private:
   Sprite * background;
   bool m_quit_requested = false;
+  vector<unique_ptr<GameObject>> object_array;
 };
+
+#endif

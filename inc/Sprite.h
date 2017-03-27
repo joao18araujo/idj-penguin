@@ -1,3 +1,6 @@
+#ifndef SPRITE_H
+#define SPRITE_H
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <iostream>
@@ -24,3 +27,5 @@ private:
   int height;
   SDL_Rect clip_rect;
 };
+
+#endif
