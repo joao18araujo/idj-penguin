@@ -20,13 +20,21 @@ void State::load_assets(){
 }
 
 void State::update(float delta){
-  if(SDL_QuitRequested() == SDL_TRUE){
-    m_quit_requested = true;
+  input();
+
+  for(auto p = object_array.begin(); p < object_array.end(); ++p){
+    if((*p)->is_dead()){
+      object_array.erase(p);
+    }
   }
 }
 
 void State::render(){
   background->render(0, 0);
+
+  for(auto & go : object_array){
+    go->render();
+  }
 }
 
 void State::input() {
@@ -81,5 +89,11 @@ void State::input() {
 
 
 void State::add_object(float mx, float my){
+  float ang = 2 * 3.14159265358979 * (rand()%360) / 360;
 
+  int x = mx + 200 * cos(ang);
+  int y = my + 200 * sin(ang);
+
+  Face face(x, y);
+  object_array.emplace_back(&face);
 }
