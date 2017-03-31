@@ -94,6 +94,5 @@ void State::add_object(float mx, float my){
   int x = mx + 200 * cos(ang);
   int y = my + 200 * sin(ang);
 
-  Face face(x, y);
-  object_array.emplace_back(&face);
+  object_array.emplace_back(new Face(x, y));
 }

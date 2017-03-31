@@ -13,11 +13,11 @@ void Face::update(float delta){
 }
 
 void Face::render(){
-
+  sprite.render(box.get_draw_x(), box.get_draw_y());
 }
 
 bool Face::is_dead(){
-  return true;
+  return false;
 }
 
 void Face::take_damage(int damage){
