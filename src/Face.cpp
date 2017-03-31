@@ -1,6 +1,7 @@
 #include "Face.h"
 
 Face::Face(float x, float y) : sprite(Sprite("penguinface.png")){
+  hitpoints = 30;
   box = Rectangle(x, y, sprite.get_width(), sprite.get_height());
 }
 
@@ -17,9 +18,9 @@ void Face::render(){
 }
 
 bool Face::is_dead(){
-  return false;
+  return hitpoints <= 0;
 }
 
 void Face::take_damage(int damage){
-
+  hitpoints -= damage;
 }

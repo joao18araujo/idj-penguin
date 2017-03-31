@@ -8,12 +8,12 @@ public:
   Rectangle();
   Rectangle(float x, float y, float width, float height);
   bool is_inside(float mx, float my);
-  float get_x();
-  float get_y();
-  float get_draw_x();
-  float get_draw_y();
-  float get_width();
-  float get_height();
+  float get_x() const;
+  float get_y() const;
+  float get_draw_x() const;
+  float get_draw_y() const;
+  float get_width() const;
+  float get_height() const;
 
 private:
 

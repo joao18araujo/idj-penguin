@@ -7,7 +7,7 @@ Game * Game::instance = nullptr;
 Game::Game(string title, int width, int height) : state(new State()){
   instance = instance? instance : this;
 
-  srand(time(NULL));
+  srand(time(nullptr));
 
   int sdl_init = SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER);
   if(sdl_init){

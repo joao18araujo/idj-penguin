@@ -1,6 +1,7 @@
 #include "State.h"
 #include "Face.h"
 #include "Sprite.h"
+#include "Vector.h"
 
 State::State(){
   background = new Sprite();
@@ -89,10 +90,10 @@ void State::input() {
 
 
 void State::add_object(float mx, float my){
-  float ang = 2 * 3.14159265358979 * (rand()%360) / 360;
+  float angle = 2 * 3.14159265358979 * (rand()%360) / 360;
 
-  int x = mx + 200 * cos(ang);
-  int y = my + 200 * sin(ang);
+  Vector vector(mx + 200, my);
+  vector.rotate(Vector(mx, my), angle);
 
-  object_array.emplace_back(new Face(x, y));
+  object_array.emplace_back(new Face(vector.get_x(), vector.get_y()));
 }
