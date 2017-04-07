@@ -12,6 +12,8 @@
 
 #include "GameObject.h"
 #include "Sprite.h"
+#include "TileSet.h"
+#include "TileMap.h"
 
 using std::vector;
 using std::unique_ptr;
@@ -21,6 +23,8 @@ private:
   Sprite * background;
   bool m_quit_requested = false;
   vector<unique_ptr<GameObject>> object_array;
+  TileSet * tile_set;
+  TileMap * tile_map;
 
 public:
   State();

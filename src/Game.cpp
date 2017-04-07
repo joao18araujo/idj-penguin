@@ -4,7 +4,7 @@
 
 Game * Game::instance = nullptr;
 
-Game::Game(string title, int width, int height) : state(new State()){
+Game::Game(string title, int width, int height){
   instance = instance? instance : this;
 
   srand(time(nullptr));
@@ -34,6 +34,8 @@ Game::Game(string title, int width, int height) : state(new State()){
     printf("%s\n", SDL_GetError());
     exit(-1);
   }
+
+  state = new State();
 }
 
 Game::~Game(){

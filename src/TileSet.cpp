@@ -6,10 +6,13 @@ TileSet::TileSet(int width, int height, string file) :
   columns = tile_set.get_width() / tile_width;
 }
 
-void TileSet::render(unsigned index, float x, float y){
-  if(index > 0 and index <= rows * columns - 1){
-    tile_set.set_clip(x, y , tile_width, tile_height);
-    tile_set.render(x * tile_width, y * tile_height);
+void TileSet::render(unsigned index, int x, int y){
+  if(index >= 0 and index <= rows * columns - 1){
+    int cx = (index%columns) * tile_height;
+    int cy = (index/columns) * tile_width;
+    printf("%d %d (%d, %d)\n", cx, cy, x, y);
+    tile_set.set_clip(cx, cy, tile_width, tile_height);
+    tile_set.render(x, y);
   }
 }
 

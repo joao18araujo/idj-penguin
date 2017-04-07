@@ -8,8 +8,10 @@ Sprite::Sprite(){
 }
 
 Sprite::Sprite(string file){
+  printf("in22\n");
   texture = nullptr;
   open("res/img/" + file);
+  printf("in223\n");
 }
 
 Sprite::~Sprite(){
@@ -31,7 +33,9 @@ bool Sprite::is_open(){
 }
 
 void Sprite::open(string file){
+  printf("in open %s\n", file.c_str());
   texture = IMG_LoadTexture(Game::get_instance().get_renderer(), file.c_str());
+  printf("out open\n");
   if(texture == nullptr){
     printf("%s\n", SDL_GetError());
     exit(-1);

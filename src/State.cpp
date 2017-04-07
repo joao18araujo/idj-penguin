@@ -4,12 +4,24 @@
 #include "Vector.h"
 
 State::State(){
+  printf("In constructor State\n");
+
+  printf("Eu1\n");
   background = new Sprite();
+  printf("Eu2\n");
+  tile_set = new TileSet(64, 64, "tileset.png");
+  printf("Eu3\n");
+  tile_map = new TileMap("tileMap.txt", tile_set);
+  printf("Eu4\n");
+
+  printf("Out constructor State\n");
 }
 
 State::~State(){
-  delete background;
   object_array.clear();
+  delete tile_map;
+  delete tile_set;
+  delete background;
 }
 
 bool State::quit_requested(){
@@ -32,6 +44,7 @@ void State::update(float delta){
 
 void State::render(){
   background->render(0, 0);
+  tile_map->render(0, 0);
 
   for(auto & go : object_array){
     go->render();
