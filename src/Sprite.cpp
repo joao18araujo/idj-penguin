@@ -2,6 +2,7 @@
 
 #include "Sprite.h"
 #include "Game.h"
+#include "Resources.h"
 
 Sprite::Sprite(){
   texture = nullptr;
@@ -15,9 +16,6 @@ Sprite::Sprite(string file){
 }
 
 Sprite::~Sprite(){
-  if(texture){
-    SDL_DestroyTexture(texture);
-  }
 }
 
 int Sprite::get_width(){
@@ -33,13 +31,7 @@ bool Sprite::is_open(){
 }
 
 void Sprite::open(string file){
-  printf("in open %s\n", file.c_str());
-  texture = IMG_LoadTexture(Game::get_instance().get_renderer(), file.c_str());
-  printf("out open\n");
-  if(texture == nullptr){
-    printf("%s\n", SDL_GetError());
-    exit(-1);
-  }
+  texture = Resources::get_image(file);
 
   int query_texture = SDL_QueryTexture(texture, nullptr, nullptr,
     &width, &height);
