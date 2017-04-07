@@ -9,7 +9,7 @@ TileSet::TileSet(int width, int height, string file) :
 void TileSet::render(unsigned index, float x, float y){
   if(index > 0 and index <= rows * columns - 1){
     tile_set.set_clip(x, y , tile_width, tile_height);
-    tile_set.render(x, y);
+    tile_set.render(x * tile_width, y * tile_height);
   }
 }
 
