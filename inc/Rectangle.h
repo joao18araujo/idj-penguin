@@ -4,6 +4,12 @@
 #include <SDL2/SDL.h>
 
 class Rectangle{
+private:
+  float x;
+  float y;
+  float width;
+  float height;
+
 public:
   Rectangle();
   Rectangle(float x, float y, float width, float height);
@@ -14,13 +20,6 @@ public:
   float get_draw_y() const;
   float get_width() const;
   float get_height() const;
-
-private:
-
-  float x;
-  float y;
-  float width;
-  float height;
 };
 
 #endif

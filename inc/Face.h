@@ -5,6 +5,10 @@
 #include "Sprite.h"
 
 class Face : public GameObject{
+private:
+  int hitpoints;
+  Sprite sprite;
+  
 public:
   Face(float x, float y);
 
@@ -14,10 +18,6 @@ public:
   bool is_dead();
 
   void take_damage(int damage);
-
-private:
-  int hitpoints;
-  Sprite sprite;
 };
 
 #endif

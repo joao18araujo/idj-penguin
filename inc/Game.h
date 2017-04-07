@@ -11,6 +11,12 @@
 using std::string;
 
 class Game{
+private:
+  static Game * instance;
+  SDL_Window * window;
+  SDL_Renderer * renderer = nullptr;
+  State * state;
+
 public:
   Game(string title, int width, int height);
   ~Game();
@@ -19,12 +25,6 @@ public:
   State & get_state();
   static Game & get_instance();
   void run();
-
-private:
-  static Game * instance;
-  SDL_Window * window;
-  SDL_Renderer * renderer = nullptr;
-  State * state;
 };
 
 #endif

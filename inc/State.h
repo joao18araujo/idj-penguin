@@ -1,7 +1,11 @@
 #ifndef STATE_H
 #define STATE_H
 
+#ifdef _WIN32
+#else
 #include <SDL2/SDL.h>
+#endif
+
 #include <iostream>
 #include <vector>
 #include <memory>
@@ -13,6 +17,11 @@ using std::vector;
 using std::unique_ptr;
 
 class State{
+private:
+  Sprite * background;
+  bool m_quit_requested = false;
+  vector<unique_ptr<GameObject>> object_array;
+
 public:
   State();
   ~State();
@@ -23,11 +32,6 @@ public:
   void render();
   void input();
   void add_object(float mouse_x, float mouse_y);
-
-private:
-  Sprite * background;
-  bool m_quit_requested = false;
-  vector<unique_ptr<GameObject>> object_array;
 };
 
 #endif

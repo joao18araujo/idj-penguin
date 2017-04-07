@@ -8,6 +8,12 @@
 using std::string;
 
 class Sprite{
+private:
+  SDL_Texture * texture = nullptr;
+  int width;
+  int height;
+  SDL_Rect clip_rect;
+  
 public:
   Sprite();
   Sprite(string file);
@@ -21,11 +27,6 @@ public:
   void set_clip(int x, int y, int w, int h);
   void render(int x, int y);
 
-private:
-  SDL_Texture * texture = nullptr;
-  int width;
-  int height;
-  SDL_Rect clip_rect;
 };
 
 #endif
