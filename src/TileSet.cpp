@@ -10,7 +10,6 @@ void TileSet::render(unsigned index, int x, int y){
   if(index >= 0 and index <= rows * columns - 1){
     int cx = (index%columns) * tile_height;
     int cy = (index/columns) * tile_width;
-    printf("%d %d (%d, %d)\n", cx, cy, x, y);
     tile_set.set_clip(cx, cy, tile_width, tile_height);
     tile_set.render(x, y);
   }

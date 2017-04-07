@@ -4,17 +4,9 @@
 #include "Vector.h"
 
 State::State(){
-  printf("In constructor State\n");
-
-  printf("Eu1\n");
   background = new Sprite();
-  printf("Eu2\n");
   tile_set = new TileSet(64, 64, "tileset.png");
-  printf("Eu3\n");
   tile_map = new TileMap("tileMap.txt", tile_set);
-  printf("Eu4\n");
-
-  printf("Out constructor State\n");
 }
 
 State::~State(){

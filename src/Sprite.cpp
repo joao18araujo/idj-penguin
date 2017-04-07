@@ -9,10 +9,8 @@ Sprite::Sprite(){
 }
 
 Sprite::Sprite(string file){
-  printf("in22\n");
   texture = nullptr;
   open("res/img/" + file);
-  printf("in223\n");
 }
 
 Sprite::~Sprite(){
