@@ -1,7 +1,7 @@
 #ifndef RECTANGLE_H
 #define RECTANGLE_H
 
-#include <SDL2/SDL.h>
+#include "SDL2/SDL.h"
 
 class Rectangle{
 private:

@@ -3,8 +3,13 @@
 #include <cstring>
 
 InputManager::InputManager(){
-  memset(mouse_state, 0, sizeof mouse_state);
+  memset(mouse_state, false, sizeof mouse_state);
   memset(mouse_update, 0, sizeof mouse_update);
+  m_quit_requested = false;
+  update_counter = 0;
+  update_counter = 0;
+  mouse_x = 0;
+  mouse_y = 0;
 }
 
 InputManager::~InputManager(){
