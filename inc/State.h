@@ -1,10 +1,7 @@
 #ifndef STATE_H
 #define STATE_H
 
-#ifdef _WIN32
-#else
-#include <SDL2/SDL.h>
-#endif
+#include "SDL2/SDL.h"
 
 #include <iostream>
 #include <vector>

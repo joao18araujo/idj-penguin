@@ -1,8 +1,8 @@
 #ifndef SPRITE_H
 #define SPRITE_H
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
+#include "SDL2/SDL.h"
+#include "SDL2/SDL_image.h"
 #include <iostream>
 
 using std::string;
@@ -13,7 +13,7 @@ private:
   int width;
   int height;
   SDL_Rect clip_rect;
-  
+
 public:
   Sprite();
   Sprite(string file);
