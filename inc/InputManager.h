@@ -1,7 +1,9 @@
 #ifndef INPUTMANAGER_H
 #define INPUTMANAGER_H
 
-#include<map>
+#include "SDL2/SDL.h"
+
+#include <unordered_map>
 
 using std::unordered_map;
 
@@ -39,6 +41,13 @@ public:
   bool quit_requested();
 
   static InputManager & get_instance();
+
+  static const int LEFT_ARROW_KEY = SDLK_LEFT;
+  static const int RIGHT_ARROW_KEY = SDLK_RIGHT;
+  static const int DOWN_ARROW_KEY = SDLK_DOWN;
+  static const int UP_ARROW_KEY = SDLK_UP;
+  static const int ESCAPE_KEY = SDLK_ESCAPE;
+  static const int LEFT_MOUSE_BUTTON = SDL_BUTTON_LEFT;
 };
 
 #endif

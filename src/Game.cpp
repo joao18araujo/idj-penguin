@@ -1,5 +1,7 @@
 #include "Game.h"
 
+#include "InputManager.h"
+
 #include <cstdlib>
 
 Game * Game::instance = nullptr;
@@ -50,6 +52,7 @@ Game::~Game(){
 void Game::run(){
   state->load_assets();
   while(state->quit_requested() == false){
+    InputManager::get_instance().update();
     state->update(1);
     state->render();
 

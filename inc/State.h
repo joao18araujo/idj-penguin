@@ -31,7 +31,6 @@ public:
   void load_assets();
   void update(float delta);
   void render();
-  void input();
   void add_object(float mouse_x, float mouse_y);
 };
 
