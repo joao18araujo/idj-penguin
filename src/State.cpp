@@ -38,7 +38,7 @@ void State::update(float delta){
   }
 
   for(auto p = object_array.begin(); p < object_array.end(); ++p){
-    (*p)->update(1);
+    (*p)->update(delta);
     if((*p)->is_dead()){
       object_array.erase(p);
     }

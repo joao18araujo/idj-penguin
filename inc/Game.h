@@ -17,6 +17,11 @@ private:
   SDL_Renderer * renderer = nullptr;
   State * state;
 
+  int frame_start;
+  float delta;
+
+  void calculate_delta_time();
+
 public:
   Game(string title, int width, int height);
   ~Game();
@@ -25,6 +30,7 @@ public:
   State & get_state();
   static Game & get_instance();
   void run();
+  float get_delta_time();
 };
 
 #endif

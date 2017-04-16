@@ -8,6 +8,8 @@ Game * Game::instance = nullptr;
 
 Game::Game(string title, int width, int height){
   instance = instance? instance : this;
+  frame_start = SDL_GetTicks();
+  delta = 0;
 
   srand(time(nullptr));
 
@@ -50,10 +52,12 @@ Game::~Game(){
 }
 
 void Game::run(){
+  this->calculate_delta_time();
+
   state->load_assets();
   while(state->quit_requested() == false){
     InputManager::get_instance().update();
-    state->update(1);
+    state->update(delta);
     state->render();
 
     SDL_RenderPresent(renderer);
@@ -72,4 +76,16 @@ State & Game::get_state(){
 
 SDL_Renderer * Game::get_renderer(){
   return renderer;
+}
+
+void Game::calculate_delta_time(){
+  int new_frame_start = SDL_GetTicks();
+
+  delta = (new_frame_start - frame_start)/100.0;
+
+  frame_start = new_frame_start;
+}
+
+float Game::get_delta_time(){
+  return delta;
 }
