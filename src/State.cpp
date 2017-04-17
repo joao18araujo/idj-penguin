@@ -54,11 +54,14 @@ void State::update(float delta){
 
 void State::render(){
   background->render(0, 0);
-  tile_map->render(Camera::pos[LAYER].x, Camera::pos[LAYER].y);
+  tile_map->render(0, 1, Camera::pos);
+
 
   for(auto & go : object_array){
     go->render();
   }
+
+  tile_map->render(1, 2, Camera::pos);
 }
 
 void State::add_object(float mx, float my){

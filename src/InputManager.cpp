@@ -61,6 +61,9 @@ void InputManager::update(){
       case SDL_QUIT:
         m_quit_requested = true;
         break;
+
+      default:
+        break;
     }
   }
 }

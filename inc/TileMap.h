@@ -2,6 +2,7 @@
 #include <vector>
 
 #include "TileSet.h"
+#include "Vector.h"
 
 using std::vector;
 using std::string;
@@ -24,6 +25,6 @@ public:
 
   void load(string file);
   int & at(int x, int y, int z = 0);
-  void render_layer(int layer, int camera_x = 0, int camera_y = 0);
-  void render(int camera_x = 0, int camera_y = 0);
+  void render_layer(int layer, Vector * camera_position);
+  void render(int first, int last, Vector * camera_position);
 };

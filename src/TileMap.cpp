@@ -1,10 +1,13 @@
 #include "TileMap.h"
 
 #include <unistd.h>
+#include <algorithm>
 
 #include <fstream>
 
 using std::fstream;
+using std::max;
+using std::min;
 
 TileMap::TileMap(string file, TileSet * set) : tile_set(set){
   this->load(file);
@@ -54,20 +57,22 @@ int & TileMap::at(int x, int y, int z){
   return tile_matrix[(x * map_width + y) * map_height + z];
 }
 
-void TileMap::render_layer(int layer, int camera_x, int camera_y){
+void TileMap::render_layer(int layer, Vector * camera_position){
   for(int j = 0; j < map_width; ++j){
     for(int k = 0; k < map_height; ++k){
       int index = this->at(layer, j, k);
-      int x = camera_x + k * tile_set->get_tile_height();
-      int y = camera_y + j * tile_set->get_tile_width();
+      int x = camera_position[layer].x + k * tile_set->get_tile_height();
+      int y = camera_position[layer].y + j * tile_set->get_tile_width();
 
       tile_set->render(index, x, y);
     }
   }
 }
 
-void TileMap::render(int camera_x, int camera_y){
-  for(int i = 0; i < map_depth; ++i){
-    this->render_layer(i, camera_x, camera_y);
+void TileMap::render(int first, int last, Vector * camera_position){
+  first = max(first, 0);
+  last = min(last, map_depth);
+  for(int i = first; i < last; ++i){
+    this->render_layer(i, camera_position);
   }
 }

@@ -6,7 +6,7 @@ TileSet::TileSet(int width, int height, string file) :
   columns = tile_set.get_width() / tile_width;
 }
 
-void TileSet::render(unsigned index, int x, int y){
+void TileSet::render(int index, int x, int y){
   if(index >= 0 and index <= rows * columns - 1){
     int cx = (index%columns) * tile_height;
     int cy = (index/columns) * tile_width;

@@ -13,7 +13,7 @@ private:
 
 public:
   TileSet(int width, int height, string file);
-  void render(unsigned index, int x, int y);
+  void render(int index, int x, int y);
   int get_tile_width() const;
   int get_tile_height() const;
 };
