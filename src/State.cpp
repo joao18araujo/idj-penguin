@@ -3,6 +3,7 @@
 #include "Sprite.h"
 #include "Vector.h"
 #include "InputManager.h"
+#include "Camera.h"
 
 State::State(){
   background = new Sprite();
@@ -28,6 +29,8 @@ void State::load_assets(){
 void State::update(float delta){
   InputManager & inputManager = InputManager::get_instance();
 
+  Camera::update(delta);
+
   if(inputManager.key_press(SDLK_ESCAPE) or inputManager.quit_requested()){
     m_quit_requested = true;
     return;
@@ -47,7 +50,7 @@ void State::update(float delta){
 
 void State::render(){
   background->render(0, 0);
-  tile_map->render(0, 0);
+  tile_map->render(Camera::pos.x, Camera::pos.y);
 
   for(auto & go : object_array){
     go->render();
@@ -60,5 +63,5 @@ void State::add_object(float mx, float my){
   Vector vector(mx + 200, my);
   vector.rotate(Vector(mx, my), angle);
 
-  object_array.emplace_back(new Face(vector.get_x(), vector.get_y()));
+  object_array.emplace_back(new Face(vector.x, vector.y));
 }

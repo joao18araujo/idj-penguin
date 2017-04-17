@@ -1,0 +1,20 @@
+#ifndef CAMERA_H
+#define CAMERA_H
+
+#include "GameObject.h"
+#include "Vector.h"
+
+class Camera{
+private:
+  static GameObject * focus;
+
+public:
+  static Vector pos;
+  static Vector speed;
+
+  static void follow(GameObject * new_focus);
+  static void unfollow();
+  static void update(float delta);
+};
+
+#endif
