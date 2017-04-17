@@ -15,3 +15,5 @@
 ### Para limpar os diretórios
 
 #### $ make dist-clean
+
+### Quaisquer problemas: https://github.com/joao18araujo/idj-penguin

@@ -4,7 +4,7 @@
 GameObject * Camera::focus = nullptr;
 Vector Camera::speed;
 Vector Camera::pos[LAYERS];
-float Camera::layer_speed[LAYERS] = {8, 4, 2, 1};
+float Camera::layer_speed[LAYERS] = {4, 6, 16, 32};
 
 void Camera::follow(GameObject * new_focus){
   focus = new_focus;
