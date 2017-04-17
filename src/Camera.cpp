@@ -3,7 +3,7 @@
 
 GameObject * Camera::focus = nullptr;
 Vector Camera::speed;
-Vector Camera::pos;
+Vector Camera::pos[];
 
 void Camera::follow(GameObject * new_focus){
   focus = new_focus;
@@ -31,8 +31,10 @@ void Camera::update(float delta){
       speed.y += (i % 2) * (i - 2) * directions[i] * delta;
     }
 
-    pos.x += speed.x;
-    pos.y += speed.y;
+    for(int i = 0; i < LAYERS; ++i){
+      pos[0].x += speed.x * (LAYERS - 1);
+      pos[0].y += speed.y * (LAYERS - 1);
+    }
   }else{
     //TODO proximo tX
   }

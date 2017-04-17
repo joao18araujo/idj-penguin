@@ -5,6 +5,8 @@
 #include "InputManager.h"
 #include "Camera.h"
 
+#define LAYER 0
+
 State::State(){
   background = new Sprite();
   tile_set = new TileSet(64, 64, "tileset.png");
@@ -37,8 +39,8 @@ void State::update(float delta){
   }
 
   if(inputManager.key_press(SDLK_SPACE)){
-    int x = inputManager.get_mouse_x() - Camera::pos.x;
-    int y = inputManager.get_mouse_y() - Camera::pos.y;
+    int x = inputManager.get_mouse_x() - Camera::pos[LAYER].x;
+    int y = inputManager.get_mouse_y() - Camera::pos[LAYER].y;
     add_object(x, y);
   }
 
@@ -52,7 +54,7 @@ void State::update(float delta){
 
 void State::render(){
   background->render(0, 0);
-  tile_map->render(Camera::pos.x, Camera::pos.y);
+  tile_map->render(Camera::pos[LAYER].x, Camera::pos[LAYER].y);
 
   for(auto & go : object_array){
     go->render();

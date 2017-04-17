@@ -3,6 +3,8 @@
 #include "InputManager.h"
 #include "Camera.h"
 
+#define LAYER 0
+
 Face::Face(float x, float y) : sprite(Sprite("penguinface.png")){
   hitpoints = 30;
   box = Rectangle(x, y, sprite.get_width(), sprite.get_height());
@@ -18,8 +20,8 @@ void Face::update(float delta){
 
 
   if(inputManager.mouse_press(InputManager::LEFT_MOUSE_BUTTON)) {
-      int x = inputManager.get_mouse_x() - Camera::pos.x;
-      int y = inputManager.get_mouse_y() - Camera::pos.y;
+      int x = inputManager.get_mouse_x() - Camera::pos[LAYER].x;
+      int y = inputManager.get_mouse_y() - Camera::pos[LAYER].y;
       if(this->box.is_inside(x, y)) {
         this->take_damage(rand() % 10 + 10);
       }
@@ -27,8 +29,8 @@ void Face::update(float delta){
 }
 
 void Face::render(){
-  int x = box.get_draw_x()  + Camera::pos.x;
-  int y = box.get_draw_y() + Camera::pos.y;
+  int x = box.get_draw_x()  + Camera::pos[LAYER].x;
+  int y = box.get_draw_y() + Camera::pos[LAYER].y;
   sprite.render(x, y);
 }
 
