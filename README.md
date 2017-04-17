@@ -1,6 +1,6 @@
 ## Observações
 
-### O jogo atualmente roda apenas em Linux
+### O jogo atualmente roda em Linux e Windows
 
 ### A pasta img é dentro da pasta res por padrão (ex: "res/img/ocean.jpg"
 
