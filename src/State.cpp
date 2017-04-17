@@ -37,7 +37,9 @@ void State::update(float delta){
   }
 
   if(inputManager.key_press(SDLK_SPACE)){
-    add_object(inputManager.get_mouse_x(), inputManager.get_mouse_y());
+    int x = inputManager.get_mouse_x() - Camera::pos.x;
+    int y = inputManager.get_mouse_y() - Camera::pos.y;
+    add_object(x, y);
   }
 
   for(auto p = object_array.begin(); p < object_array.end(); ++p){

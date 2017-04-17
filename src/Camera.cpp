@@ -33,9 +33,7 @@ void Camera::update(float delta){
 
     pos.x += speed.x;
     pos.y += speed.y;
-
-    printf("(%.2f %.2f)\n", pos.x, pos.y);
   }else{
-
+    //TODO proximo tX
   }
 }
