@@ -12,6 +12,7 @@ private:
 
 public:
   static Vector pos[LAYERS];
+  static float layer_speed[LAYERS];
   static Vector speed;
 
   static void follow(GameObject * new_focus);
