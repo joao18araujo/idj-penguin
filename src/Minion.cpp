@@ -5,7 +5,7 @@
 #include "Camera.h"
 
 #define PI 3.14159265358979
-#define ANGULAR_SPEED PI/16
+#define ANGULAR_SPEED PI/32
 
 Minion::Minion(GameObject * minion_center, float arc_offset){
   center = minion_center;

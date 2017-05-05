@@ -8,6 +8,8 @@
 #define SHOOT Alien::Action::ActionType::SHOOT
 #define MOVE Action::ActionType::MOVE
 #define EPS 4
+#define PI 3.14159265358979
+#define ANGLE_OFFSET PI/8
 
 Alien::Alien(float x, float y, int m_minions){
   sprite = Sprite("alien.png");
@@ -16,8 +18,12 @@ Alien::Alien(float x, float y, int m_minions){
   box = Rectangle(x, y, sprite.get_width(), sprite.get_height());
 
   //preenche minions
+  float angle_offset = m_minions ? 2 * PI / m_minions : 0;
+  printf("eitaaaaaaaaaa: %f\n", angle_offset * 180 / PI);
+  float initial_arc = 0;
   while(m_minions--){
-    minion_array.emplace_back(this, 0);
+    minion_array.emplace_back(this, initial_arc);
+    initial_arc = fmod(initial_arc + angle_offset, 2 * PI);
   }
 }
 
