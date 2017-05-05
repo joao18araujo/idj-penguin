@@ -26,9 +26,8 @@ Alien::Alien(float x, float y, int m_minions){
   float angle_offset = m_minions ? 2 * PI / m_minions : 0;
   float initial_arc = 0;
   while(m_minions--){
-    int rnd = rand();
-    float scale = (10 + (rnd%5)) / 10.0;
-    printf("scale = %f %d\n", scale, rnd);
+    float scale = (10 + (rand()%5)) / 10.0;
+    printf("scale = %f\n", scale);
     minion_array.emplace_back(this, initial_arc, scale);
     initial_arc = fmod(initial_arc + angle_offset, 2 * PI);
   }
@@ -63,9 +62,20 @@ void Alien::update(float delta){
   if(not task_queue.empty()){
     Action action = task_queue.front();
     if(action.type == SHOOT){
-      if(minion_array.size() > 0){
-        minion_array[0].shoot(action.pos);
+      float min_distance = 1e9;
+      Minion minion;
+
+      for(auto & m : minion_array){
+        printf("Minion %f < %f\n", m.distance(action.pos), min_distance);
+        float distance = m.distance(action.pos);
+        if(distance < min_distance){
+          minion = m;
+          min_distance = distance;
+        }
       }
+
+      minion.shoot(action.pos);
+
       task_queue.pop();
     }
     else if(action.type == MOVE){
@@ -75,7 +85,6 @@ void Alien::update(float delta){
         box.set_y(action.pos.y);
       }else{
         double angle = atan2(action.pos.y - box.get_y(), action.pos.x - box.get_x());
-        printf("(%f, %f) ang = %f\n", action.pos.y - box.get_y(), action.pos.x - box.get_x(), angle);
 
         speed.x = cos(angle) * 2;
         speed.y = sin(angle) * 2;

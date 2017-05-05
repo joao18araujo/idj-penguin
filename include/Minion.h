@@ -14,12 +14,14 @@ private:
 
 public:
 
+  Minion();
   Minion(GameObject * minion_center, float arc_offset = 0, float scale = 1);
 
   void update(float delta);
   void render();
   bool is_dead();
   void shoot(Vector pos);
+  float distance(Vector pos);
 };
 
 #endif

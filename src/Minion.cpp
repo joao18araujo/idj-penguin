@@ -6,8 +6,14 @@
 #include "Bullet.h"
 #include "Game.h"
 
+#include <cmath>
+
 #define PI 3.14159265358979
 #define ANGULAR_SPEED -PI/128
+
+Minion::Minion(){
+  
+}
 
 Minion::Minion(GameObject * minion_center, float arc_offset, float scale){
   center = minion_center;
@@ -47,4 +53,8 @@ void Minion::shoot(Vector pos){
   bullet->rotation = angle;
 
   Game::get_instance().get_state().add_object(bullet);
+}
+
+float Minion::distance(Vector pos){
+  return hypot(pos.x - box.get_x(), pos.y - box.get_y());
 }
