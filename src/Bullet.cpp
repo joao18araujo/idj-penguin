@@ -21,7 +21,7 @@ Bullet::Bullet(float x, float y, float angle, float m_speed, float max_distance,
 void Bullet::update(float delta){
   box.set_x(box.get_x() + speed.x * delta);
   box.set_y(box.get_y() + speed.y * delta);
-  distance_left -= modular_speed;
+  distance_left -= modular_speed * delta;
 }
 
 void Bullet::render(){

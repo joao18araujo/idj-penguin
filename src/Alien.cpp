@@ -9,7 +9,7 @@
 
 #define SHOOT Alien::Action::ActionType::SHOOT
 #define MOVE Action::ActionType::MOVE
-#define EPS 4
+#define EPS 8
 #define PI 3.14159265358979
 #define ANGLE_OFFSET PI/8
 #define ANGULAR_SPEED PI/128
@@ -78,8 +78,8 @@ void Alien::update(float delta){
       }else{
         double angle = atan2(action.pos.y - box.get_y(), action.pos.x - box.get_x());
 
-        speed.x = cos(angle) * 2;
-        speed.y = sin(angle) * 2;
+        speed.x = cos(angle) * 4;
+        speed.y = sin(angle) * 4;
 
         box.set_x(box.get_x() + speed.x * delta);
         box.set_y(box.get_y() + speed.y * delta);

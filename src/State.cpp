@@ -13,7 +13,7 @@ State::State(){
   tile_set = new TileSet(64, 64, "tileset.png");
   tile_map = new TileMap("tileMap.txt", tile_set);
 
-  object_array.emplace_back(new Alien(512, 300, 5));
+  object_array.emplace_back(new Alien(512, 300, 8));
 }
 
 State::~State(){
