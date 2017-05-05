@@ -2,8 +2,10 @@
 #define MINION_H
 
 #include "GameObject.h"
+#include "Sprite.h"
+#include "Vector.h"
 
-class Minion{
+class Minion : GameObject{
 private:
 
   GameObject * center;
@@ -16,7 +18,7 @@ public:
 
   void update(float delta);
   void render();
-  void is_dead();
+  bool is_dead();
   void shoot(Vector pos);
 };
 

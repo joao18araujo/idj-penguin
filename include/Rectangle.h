@@ -16,6 +16,8 @@ public:
   bool is_inside(float mx, float my);
   float get_x() const;
   float get_y() const;
+  void set_x(float x);
+  void set_y(float y);
   float get_draw_x() const;
   float get_draw_y() const;
   float get_width() const;

@@ -4,6 +4,7 @@
 #include "Vector.h"
 #include "InputManager.h"
 #include "Camera.h"
+#include "Alien.h"
 
 #define LAYER 0
 
@@ -11,6 +12,8 @@ State::State(){
   background = new Sprite();
   tile_set = new TileSet(64, 64, "tileset.png");
   tile_map = new TileMap("tileMap.txt", tile_set);
+
+  object_array.emplace_back(new Alien(512, 300, 1));
 }
 
 State::~State(){
@@ -55,7 +58,6 @@ void State::update(float delta){
 void State::render(){
   background->render(0, 0);
   tile_map->render(0, 1, Camera::pos);
-
 
   for(auto & go : object_array){
     go->render();

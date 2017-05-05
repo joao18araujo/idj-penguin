@@ -7,17 +7,25 @@
 #include "GameObject.h"
 #include "Sprite.h"
 #include "Vector.h"
+#include "Minion.h"
 
 using std::queue;
 using std::vector;
+
+#define LAYER 0
 
 class Alien : public GameObject{
 private:
 
   class Action{
-    typedef enum _ActionType {MOVE, SHOOT} ActionType;
+  public:
+    enum ActionType {MOVE, SHOOT};
 
-    Action(ActionType type, float x, float y);
+    Action(ActionType type, float x, float y){
+      this->type = type;
+      pos = Vector(x, y);
+    }
+
     ActionType type;
     Vector pos;
   };
@@ -28,6 +36,8 @@ private:
 
   queue<Action> task_queue;
   vector<Minion> minion_array;
+
+  bool arrived(Vector pos);
 
 public:
 

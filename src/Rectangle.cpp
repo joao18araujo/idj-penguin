@@ -8,7 +8,7 @@ Rectangle::Rectangle(float ax, float ay, float w, float h) :
 bool Rectangle::is_inside(float mx, float my){
   bool horizontal_in = (mx >= x - width/2 and mx <= x + width/2);
   bool vertical_in = (my >= y - height/2 and my <= y + height/2);
-  
+
   return horizontal_in and vertical_in;
 }
 
@@ -18,6 +18,14 @@ float Rectangle::get_x() const{
 
 float Rectangle::get_y() const{
   return y;
+}
+
+void Rectangle::set_x(float x){
+  this->x = x;
+}
+
+void Rectangle::set_y(float y){
+  this->y = y;
 }
 
 float Rectangle::get_draw_x() const{
