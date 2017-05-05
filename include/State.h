@@ -32,6 +32,7 @@ public:
   void update(float delta);
   void render();
   void add_object(float mouse_x, float mouse_y);
+  void add_object(GameObject * ptr);
 };
 
 #endif

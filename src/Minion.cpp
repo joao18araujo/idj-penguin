@@ -3,9 +3,11 @@
 #define LAYER 0
 
 #include "Camera.h"
+#include "Bullet.h"
+#include "Game.h"
 
 #define PI 3.14159265358979
-#define ANGULAR_SPEED PI/32
+#define ANGULAR_SPEED PI/320
 
 Minion::Minion(GameObject * minion_center, float arc_offset){
   center = minion_center;
@@ -20,7 +22,6 @@ Minion::Minion(GameObject * minion_center, float arc_offset){
 
 void Minion::update(float delta){
   arc = fmod(arc + ANGULAR_SPEED * delta, 2 * PI);
-  printf("arc = %f\n", arc);
   box.set_x(center->box.get_x() + 200 * cos(arc));
   box.set_y(center->box.get_y() + 200 * sin(arc));
 }
@@ -36,5 +37,8 @@ bool Minion::is_dead(){
 }
 
 void Minion::shoot(Vector pos){
+  float angle  = atan2(pos.y - box.get_y(), pos.x - box.get_x());
+  Bullet * bullet = new Bullet(box.get_x(), box.get_y(), angle, 20, 500, "minionbullet1.png");
 
+  Game::get_instance().get_state().add_object(bullet);
 }

@@ -19,7 +19,6 @@ Alien::Alien(float x, float y, int m_minions){
 
   //preenche minions
   float angle_offset = m_minions ? 2 * PI / m_minions : 0;
-  printf("eitaaaaaaaaaa: %f\n", angle_offset * 180 / PI);
   float initial_arc = 0;
   while(m_minions--){
     minion_array.emplace_back(this, initial_arc);
@@ -53,7 +52,12 @@ void Alien::update(float delta){
 
     if(not task_queue.empty()){
       Action action = task_queue.front();
-      if(action.type == SHOOT) task_queue.pop();
+      if(action.type == SHOOT){
+        if(minion_array.size() > 0){
+          minion_array[0].shoot(action.pos);
+        }
+        task_queue.pop();
+      }
       else if(action.type == MOVE){
         if(arrived(action.pos)){
           task_queue.pop();
@@ -94,7 +98,6 @@ bool Alien::is_dead(){
 bool Alien::arrived(Vector pos){
   float delta_x = fabs(box.get_x() - pos.x);
   float delta_y = fabs(box.get_y() - pos.y);
-  printf("deltas = %f e %f\n", delta_x, delta_y);
 
   return delta_x <= EPS and delta_y <= EPS;
 }
