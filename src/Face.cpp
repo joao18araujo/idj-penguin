@@ -14,7 +14,7 @@ Face::~Face(){
 
 }
 
-void Face::update(float delta){
+void Face::update(float){
   InputManager inputManager = InputManager::get_instance();
 
 

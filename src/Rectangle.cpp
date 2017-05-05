@@ -20,12 +20,12 @@ float Rectangle::get_y() const{
   return y;
 }
 
-void Rectangle::set_x(float x){
-  this->x = x;
+void Rectangle::set_x(float cx){
+  this->x = cx;
 }
 
-void Rectangle::set_y(float y){
-  this->y = y;
+void Rectangle::set_y(float cy){
+  this->y = cy;
 }
 
 float Rectangle::get_draw_x() const{

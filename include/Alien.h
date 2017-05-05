@@ -21,8 +21,8 @@ private:
   public:
     enum ActionType {MOVE, SHOOT};
 
-    Action(ActionType type, float x, float y){
-      this->type = type;
+    Action(ActionType ctype, float x, float y){
+      this->type = ctype;
       pos = Vector(x, y);
     }
 

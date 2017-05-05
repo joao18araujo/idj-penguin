@@ -20,14 +20,13 @@ Alien::Alien(float x, float y, int m_minions){
   speed = Vector(1, 1);
   box = Rectangle(x, y, sprite.get_width(), sprite.get_height());
 
-  srand(time(NULL));
+  srand(time(nullptr));
 
   //preenche minions
   float angle_offset = m_minions ? 2 * PI / m_minions : 0;
   float initial_arc = 0;
   while(m_minions--){
     float scale = (10 + (rand()%5)) / 10.0;
-    printf("scale = %f\n", scale);
     minion_array.emplace_back(this, initial_arc, scale);
     initial_arc = fmod(initial_arc + angle_offset, 2 * PI);
   }
@@ -51,12 +50,6 @@ void Alien::update(float delta){
 
     Action::ActionType type = left_click ? SHOOT : MOVE;
     task_queue.emplace(type, x, y);
-    if(left_click)
-      printf("SHOOTED at ");
-    else
-      printf("MOVED at ");
-
-    printf("%d, %d\n", x, y);
   }
 
   if(not task_queue.empty()){
@@ -66,7 +59,6 @@ void Alien::update(float delta){
       Minion minion;
 
       for(auto & m : minion_array){
-        printf("Minion %f < %f\n", m.distance(action.pos), min_distance);
         float distance = m.distance(action.pos);
         if(distance < min_distance){
           minion = m;

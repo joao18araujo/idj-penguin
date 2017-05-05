@@ -12,7 +12,7 @@
 #define ANGULAR_SPEED -PI/128
 
 Minion::Minion(){
-  
+
 }
 
 Minion::Minion(GameObject * minion_center, float arc_offset, float scale){
@@ -26,7 +26,6 @@ Minion::Minion(GameObject * minion_center, float arc_offset, float scale){
 
   float x = center->box.get_x() + 200 * cos(arc);
   float y = center->box.get_y() + 200 * sin(arc);
-  printf("Center = %f, %f\n", center->box.get_x(), center->box.get_y());
   box = Rectangle(x, y, sprite.get_width(), sprite.get_height());
 }
 

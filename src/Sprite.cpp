@@ -50,11 +50,11 @@ void Sprite::set_clip(int x, int y, int w, int h){
 }
 
 void Sprite::render(int x, int y, float angle){
-  SDL_Rect dstrect = SDL_Rect{x, y, clip_rect.w * scale_x, clip_rect.h * scale_y};
+  SDL_Rect dstrect = SDL_Rect{x, y, (int)(clip_rect.w * scale_x), (int)(clip_rect.h * scale_y)};
 
   angle *= (180 / PI);
   int render_copy = SDL_RenderCopyEx(Game::get_instance().get_renderer(), texture,
-    &clip_rect, &dstrect, angle, NULL, SDL_FLIP_NONE);
+    &clip_rect, &dstrect, angle, nullptr, SDL_FLIP_NONE);
   if(render_copy){
     printf("%s\n", SDL_GetError());
     exit(-1);
