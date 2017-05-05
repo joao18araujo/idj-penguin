@@ -4,12 +4,15 @@
 #include "Camera.h"
 
 #include <cmath>
+#include <ctime>
+#include <cstdlib>
 
 #define SHOOT Alien::Action::ActionType::SHOOT
 #define MOVE Action::ActionType::MOVE
 #define EPS 4
 #define PI 3.14159265358979
 #define ANGLE_OFFSET PI/8
+#define ANGULAR_SPEED PI/128
 
 Alien::Alien(float x, float y, int m_minions){
   sprite = Sprite("alien.png");
@@ -17,11 +20,16 @@ Alien::Alien(float x, float y, int m_minions){
   speed = Vector(1, 1);
   box = Rectangle(x, y, sprite.get_width(), sprite.get_height());
 
+  srand(time(NULL));
+
   //preenche minions
   float angle_offset = m_minions ? 2 * PI / m_minions : 0;
   float initial_arc = 0;
   while(m_minions--){
-    minion_array.emplace_back(this, initial_arc);
+    int rnd = rand();
+    float scale = (10 + (rnd%5)) / 10.0;
+    printf("scale = %f %d\n", scale, rnd);
+    minion_array.emplace_back(this, initial_arc, scale);
     initial_arc = fmod(initial_arc + angle_offset, 2 * PI);
   }
 }
@@ -31,60 +39,62 @@ Alien::~Alien(){
 }
 
 void Alien::update(float delta){
+  rotation = fmod(rotation + ANGULAR_SPEED * delta, 2 * PI);
+
   InputManager inputManager = InputManager::get_instance();
 
-    bool left_click = inputManager.mouse_press(InputManager::LEFT_MOUSE_BUTTON);
-    bool right_click = inputManager.mouse_press(InputManager::RIGHT_MOUSE_BUTTON);
+  bool left_click = inputManager.mouse_press(InputManager::LEFT_MOUSE_BUTTON);
+  bool right_click = inputManager.mouse_press(InputManager::RIGHT_MOUSE_BUTTON);
 
-    if(left_click or right_click) {
-      int x = inputManager.get_mouse_x() - Camera::pos[LAYER].x;
-      int y = inputManager.get_mouse_y() - Camera::pos[LAYER].y;
+  if(left_click or right_click) {
+    int x = inputManager.get_mouse_x() - Camera::pos[LAYER].x;
+    int y = inputManager.get_mouse_y() - Camera::pos[LAYER].y;
 
-      Action::ActionType type = left_click ? SHOOT : MOVE;
-      task_queue.emplace(type, x, y);
-      if(left_click)
-        printf("SHOOTED at ");
-      else
-        printf("MOVED at ");
+    Action::ActionType type = left_click ? SHOOT : MOVE;
+    task_queue.emplace(type, x, y);
+    if(left_click)
+      printf("SHOOTED at ");
+    else
+      printf("MOVED at ");
 
-      printf("%d, %d\n", x, y);
+    printf("%d, %d\n", x, y);
+  }
+
+  if(not task_queue.empty()){
+    Action action = task_queue.front();
+    if(action.type == SHOOT){
+      if(minion_array.size() > 0){
+        minion_array[0].shoot(action.pos);
+      }
+      task_queue.pop();
     }
-
-    if(not task_queue.empty()){
-      Action action = task_queue.front();
-      if(action.type == SHOOT){
-        if(minion_array.size() > 0){
-          minion_array[0].shoot(action.pos);
-        }
+    else if(action.type == MOVE){
+      if(arrived(action.pos)){
         task_queue.pop();
-      }
-      else if(action.type == MOVE){
-        if(arrived(action.pos)){
-          task_queue.pop();
-          box.set_x(action.pos.x);
-          box.set_y(action.pos.y);
-        }else{
-          double angle = atan2(action.pos.y - box.get_y(), action.pos.x - box.get_x());
-          printf("(%f, %f) ang = %f\n", action.pos.y - box.get_y(), action.pos.x - box.get_x(), angle);
+        box.set_x(action.pos.x);
+        box.set_y(action.pos.y);
+      }else{
+        double angle = atan2(action.pos.y - box.get_y(), action.pos.x - box.get_x());
+        printf("(%f, %f) ang = %f\n", action.pos.y - box.get_y(), action.pos.x - box.get_x(), angle);
 
-          speed.x = cos(angle) * 2;
-          speed.y = sin(angle) * 2;
+        speed.x = cos(angle) * 2;
+        speed.y = sin(angle) * 2;
 
-          box.set_x(box.get_x() + speed.x * delta);
-          box.set_y(box.get_y() + speed.y * delta);
-        }
+        box.set_x(box.get_x() + speed.x * delta);
+        box.set_y(box.get_y() + speed.y * delta);
       }
     }
+  }
 
-    for(auto & minion : minion_array){
-      minion.update(delta);
-    }
+  for(auto & minion : minion_array){
+    minion.update(delta);
+  }
 }
 
 void Alien::render(){
   int x = box.get_draw_x()  + Camera::pos[LAYER].x;
   int y = box.get_draw_y() + Camera::pos[LAYER].y;
-  sprite.render(x, y);
+  sprite.render(x, y, rotation);
 
   for(auto & minion : minion_array){
     minion.render();

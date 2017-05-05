@@ -14,7 +14,7 @@ private:
 
 public:
 
-  Minion(GameObject * minion_center, float arc_offset = 0);
+  Minion(GameObject * minion_center, float arc_offset = 0, float scale = 1);
 
   void update(float delta);
   void render();

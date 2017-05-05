@@ -13,6 +13,8 @@ private:
   int width;
   int height;
   SDL_Rect clip_rect;
+  float scale_x;
+  float scale_y;
 
 public:
   Sprite();
@@ -25,7 +27,10 @@ public:
 
   void open(string file);
   void set_clip(int x, int y, int w, int h);
-  void render(int x, int y);
+  void render(int x, int y, float angle = 0);
+
+  void set_scale_x(float scale);
+  void set_scale_y(float scale);
 
 };
 

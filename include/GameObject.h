@@ -11,6 +11,7 @@ public:
   virtual bool is_dead() = 0;
 
   Rectangle box;
+  float rotation = 0;
 };
 
 #endif

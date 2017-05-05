@@ -4,24 +4,28 @@
 #include "Game.h"
 #include "Resources.h"
 
+#define PI 3.14159265358979
+
 Sprite::Sprite(){
   texture = nullptr;
+  scale_x = scale_y = 1;
 }
 
 Sprite::Sprite(string file){
   texture = nullptr;
   open("res/img/" + file);
+  scale_x = scale_y = 1;
 }
 
 Sprite::~Sprite(){
 }
 
 int Sprite::get_width(){
-  return width;
+  return width * scale_x;
 }
 
 int Sprite::get_height(){
-  return height;
+  return height * scale_y;
 }
 
 bool Sprite::is_open(){
@@ -45,13 +49,22 @@ void Sprite::set_clip(int x, int y, int w, int h){
   clip_rect = SDL_Rect{x, y, w, h};
 }
 
-void Sprite::render(int x, int y){
-  SDL_Rect dstrect = SDL_Rect{x, y, clip_rect.w, clip_rect.h};
+void Sprite::render(int x, int y, float angle){
+  SDL_Rect dstrect = SDL_Rect{x, y, clip_rect.w * scale_x, clip_rect.h * scale_y};
 
-  int render_copy = SDL_RenderCopy(Game::get_instance().get_renderer(), texture,
-    &clip_rect, &dstrect);
+  angle *= (180 / PI);
+  int render_copy = SDL_RenderCopyEx(Game::get_instance().get_renderer(), texture,
+    &clip_rect, &dstrect, angle, NULL, SDL_FLIP_NONE);
   if(render_copy){
     printf("%s\n", SDL_GetError());
     exit(-1);
   }
+}
+
+void Sprite::set_scale_x(float scale){
+  scale_x = scale;
+}
+
+void Sprite::set_scale_y(float scale){
+  scale_y = scale;
 }
