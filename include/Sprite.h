@@ -12,13 +12,17 @@ private:
   SDL_Texture * texture = nullptr;
   int width;
   int height;
+  int frame_count;
+  int current_frame;
+  float time_elapsed;
+  float frame_time;
   SDL_Rect clip_rect;
   float scale_x;
   float scale_y;
 
 public:
   Sprite();
-  Sprite(string file);
+  Sprite(string file, int cframe_count = 1, float cframe_time = 1);
   ~Sprite();
 
   int get_width();
@@ -27,6 +31,11 @@ public:
 
   void open(string file);
   void set_clip(int x, int y, int w, int h);
+  void set_frame(int frame);
+  void set_frame_count(int cframe_count);
+  void set_frame_time(float cframe_time);
+
+  void update(float delta);
   void render(int x, int y, float angle = 0);
 
   void set_scale_x(float scale);

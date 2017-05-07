@@ -7,8 +7,9 @@
 
 #define LAYER 0
 
-Bullet::Bullet(float x, float y, float angle, float m_speed, float max_distance, string sp){
-  sprite = Sprite(sp);
+Bullet::Bullet(float x, float y, float angle, float m_speed, float max_distance,
+                float frame_count, float frame_time, string sp){
+  sprite = Sprite(sp, frame_count, frame_time);
   box = Rectangle(x, y, sprite.get_width(), sprite.get_height());
 
   modular_speed = m_speed;
@@ -22,6 +23,7 @@ void Bullet::update(float delta){
   box.set_x(box.get_x() + speed.x * delta);
   box.set_y(box.get_y() + speed.y * delta);
   distance_left -= modular_speed * delta;
+  sprite.update(delta);
 }
 
 void Bullet::render(){

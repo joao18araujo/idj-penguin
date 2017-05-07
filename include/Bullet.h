@@ -15,7 +15,7 @@ private:
 
 public:
 
-  Bullet(float x, float y, float angle, float speed, float max_distance, string sp);
+  Bullet(float x, float y, float angle, float speed, float max_distance, float frame_count, float frame_time, string sp);
   void update(float delta);
   void render();
   bool is_dead();

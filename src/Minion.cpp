@@ -48,7 +48,7 @@ bool Minion::is_dead(){
 
 void Minion::shoot(Vector pos){
   float angle  = atan2(pos.y - box.get_y(), pos.x - box.get_x());
-  Bullet * bullet = new Bullet(box.get_x(), box.get_y(), angle, 20, 500, "minionbullet1.png");
+  Bullet * bullet = new Bullet(box.get_x(), box.get_y(), angle, 2, 500, 3, 6,"minionbullet2.png");
   bullet->rotation = angle;
 
   Game::get_instance().get_state().add_object(bullet);

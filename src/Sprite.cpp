@@ -9,9 +9,15 @@
 Sprite::Sprite(){
   texture = nullptr;
   scale_x = scale_y = 1;
+  frame_count = 1;
+  frame_time = 1;
+  current_frame = 0;
 }
 
-Sprite::Sprite(string file){
+Sprite::Sprite(string file, int cframe_count, float cframe_time){
+  frame_count = cframe_count;
+  frame_time = cframe_time;
+  current_frame = 0;
   texture = nullptr;
   open("res/img/" + file);
   scale_x = scale_y = 1;
@@ -33,20 +39,49 @@ bool Sprite::is_open(){
 }
 
 void Sprite::open(string file){
+
   texture = Resources::get_image(file);
 
   int query_texture = SDL_QueryTexture(texture, nullptr, nullptr,
     &width, &height);
+
+  width /= frame_count;
   if(query_texture){
     printf("%s\n", SDL_GetError());
     exit(-1);
   }
 
-  set_clip(0, 0, width, height);
+  set_clip(current_frame * width, 0, width, height);
 }
 
 void Sprite::set_clip(int x, int y, int w, int h){
   clip_rect = SDL_Rect{x, y, w, h};
+}
+
+void Sprite::set_frame(int frame){
+    current_frame = frame;
+    set_clip(current_frame * width, 0, width, height);
+}
+
+void Sprite::set_frame_count(int cframe_count){
+  frame_count = cframe_count;
+}
+
+void Sprite::set_frame_time(float cframe_time){
+  frame_time = cframe_time;
+}
+
+void Sprite::update(float delta){
+  time_elapsed += delta;
+
+  printf("Time elapsed int: %f\n", time_elapsed);
+  if(time_elapsed >= frame_time){
+    time_elapsed = 0;
+    current_frame =  (current_frame + 1) % frame_count;
+    set_clip(current_frame * width, 0, width, height);
+  }
+
+  printf("Frame: %d, %f, %f\n", current_frame, time_elapsed, frame_time);
 }
 
 void Sprite::render(int x, int y, float angle){
