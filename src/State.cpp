@@ -5,6 +5,7 @@
 #include "InputManager.h"
 #include "Camera.h"
 #include "Alien.h"
+#include "Penguins.h"
 
 #define LAYER 0
 
@@ -14,6 +15,7 @@ State::State(){
   tile_map = new TileMap("tileMap.txt", tile_set);
 
   object_array.emplace_back(new Alien(512, 300, 8));
+  object_array.emplace_back(new Penguins(704, 640));
 }
 
 State::~State(){

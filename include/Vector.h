@@ -7,6 +7,7 @@ public:
   float y;
   Vector(float mx = 0, float my = 0);
   void rotate(Vector origin, float angle);
+  void transform(float module, float angle);
 };
 
 #endif

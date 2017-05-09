@@ -1,12 +1,27 @@
 #include "Penguins.h"
 
+#include "InputManager.h"
+#include "Camera.h"
+
+#include <algorithm>
+#include <cmath>
+
 Penguins * Penguins::player = nullptr;
+
+#define ACCELERATION 0.1
+#define PI 3.14159265358979
+#define ANGULAR_SPEED PI/128
+#define SPEED_LIMIT 5.0
+#define LAYER 0
+
+using std::max;
+using std::min;
 
 Penguins::Penguins(float x, float y){
   body_sprite = Sprite("penguin.png");
   cannon_sprite = Sprite("cubngun.png");
   speed = Vector(1, 1);
-  linear_speed = 1;
+  linear_speed = 0;
   cannon_angle = 0;
   hp = 100;
   rotation = 0;
@@ -19,11 +34,41 @@ Penguins::~Penguins(){
 }
 
 void Penguins::update(float delta){
+  InputManager inputManager = InputManager::get_instance();
 
+  if(inputManager.is_key_down(SDLK_w)){
+    linear_speed = min(linear_speed + ACCELERATION * delta, SPEED_LIMIT);
+  }
+  if(inputManager.is_key_down(SDLK_s)){
+    linear_speed = max(linear_speed - ACCELERATION * delta, -SPEED_LIMIT);
+  }
+  if(inputManager.is_key_down(SDLK_a)){
+    rotation = fmod(2*PI + rotation - ANGULAR_SPEED * delta, 2 * PI);
+  }
+  if(inputManager.is_key_down(SDLK_d)){
+    rotation = fmod(rotation + ANGULAR_SPEED * delta, 2 * PI);
+  }
+
+  int x = inputManager.get_mouse_x() - Camera::pos[LAYER].x;
+  int y = inputManager.get_mouse_y() - Camera::pos[LAYER].y;
+  float delta_x = x - box.get_x();
+  float delta_y = y - box.get_y();
+  cannon_angle = delta_x ? atan2(delta_y, delta_x) : 0;
+
+  printf("Linear speed = %f\n", linear_speed);
+  speed.transform(linear_speed, rotation);
+  printf("Speed(%f, %f)\n", speed.x, speed.y);
+  box.set_x(box.get_x() + speed.x * delta);
+  box.set_y(box.get_y() + speed.y * delta);
 }
 
 void Penguins::render(){
-
+  int x = box.get_draw_x()  + Camera::pos[LAYER].x;
+  int y = box.get_draw_y() + Camera::pos[LAYER].y;
+  int cannon_x = box.get_x() - cannon_sprite.get_width()/2 + Camera::pos[LAYER].x;
+  int cannon_y = box.get_y() - cannon_sprite.get_height()/2 + Camera::pos[LAYER].y;
+  body_sprite.render(x, y, rotation);
+  cannon_sprite.render(cannon_x, cannon_y, cannon_angle);
 }
 
 bool Penguins::is_dead(){

@@ -5,7 +5,7 @@
 #include "Sprite.h"
 #include "Vector.h"
 
-class Penguins : GameObject{
+class Penguins : public GameObject{
 private:
   Sprite body_sprite;
   Sprite cannon_sprite;
