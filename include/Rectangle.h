@@ -3,6 +3,8 @@
 
 #include "SDL2/SDL.h"
 
+#include "Vector.h"
+
 class Rectangle{
 private:
   float x;
@@ -22,6 +24,7 @@ public:
   float get_draw_y() const;
   float get_width() const;
   float get_height() const;
+  Vector get_center() const;
 };
 
 #endif

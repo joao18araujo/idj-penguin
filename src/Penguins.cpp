@@ -2,6 +2,8 @@
 
 #include "InputManager.h"
 #include "Camera.h"
+#include "Bullet.h"
+#include "Game.h"
 
 #include <algorithm>
 #include <cmath>
@@ -48,6 +50,9 @@ void Penguins::update(float delta){
   if(inputManager.is_key_down(SDLK_d)){
     rotation = fmod(rotation + ANGULAR_SPEED * delta, 2 * PI);
   }
+  if(inputManager.mouse_press(InputManager::LEFT_MOUSE_BUTTON)){
+    shoot();
+  }
 
   int x = inputManager.get_mouse_x() - Camera::pos[LAYER].x;
   int y = inputManager.get_mouse_y() - Camera::pos[LAYER].y;
@@ -55,9 +60,7 @@ void Penguins::update(float delta){
   float delta_y = y - box.get_y();
   cannon_angle = delta_x ? atan2(delta_y, delta_x) : 0;
 
-  printf("Linear speed = %f\n", linear_speed);
   speed.transform(linear_speed, rotation);
-  printf("Speed(%f, %f)\n", speed.x, speed.y);
   box.set_x(box.get_x() + speed.x * delta);
   box.set_y(box.get_y() + speed.y * delta);
 }
@@ -76,5 +79,10 @@ bool Penguins::is_dead(){
 }
 
 void Penguins::shoot(){
+  Vector v;
+  v.transform(box.get_width() * 0.5, cannon_angle);
+  Bullet * bullet = new Bullet(box.get_x() + v.x, box.get_y() + v.y, cannon_angle, 5, 500, 4, 6,"penguinbullet.png");
+  bullet->rotation = cannon_angle;
 
+  Game::get_instance().get_state().add_object(bullet);
 }

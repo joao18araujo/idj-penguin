@@ -74,14 +74,11 @@ void Sprite::set_frame_time(float cframe_time){
 void Sprite::update(float delta){
   time_elapsed += delta;
 
-  printf("Time elapsed int: %f\n", time_elapsed);
   if(time_elapsed >= frame_time){
     time_elapsed = 0;
     current_frame =  (current_frame + 1) % frame_count;
     set_clip(current_frame * width, 0, width, height);
   }
-
-  printf("Frame: %d, %f, %f\n", current_frame, time_elapsed, frame_time);
 }
 
 void Sprite::render(int x, int y, float angle){

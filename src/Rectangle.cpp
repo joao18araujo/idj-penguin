@@ -43,3 +43,7 @@ float Rectangle::get_width() const{
 float Rectangle::get_height() const{
   return height;
 }
+
+Vector Rectangle::get_center() const{
+  return Vector(x, y);
+}

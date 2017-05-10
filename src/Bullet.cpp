@@ -13,8 +13,7 @@ Bullet::Bullet(float x, float y, float angle, float m_speed, float max_distance,
   box = Rectangle(x, y, sprite.get_width(), sprite.get_height());
 
   modular_speed = m_speed;
-  speed.x = modular_speed * cos(angle);
-  speed.y = modular_speed * sin(angle);
+  speed.transform(modular_speed, angle);
 
   distance_left = max_distance;
 }
