@@ -41,3 +41,11 @@ bool Face::is_dead(){
 void Face::take_damage(int damage){
   hitpoints -= damage;
 }
+
+void Face::notify_collision(GameObject & object){
+
+}
+
+bool Face::is(string type){
+  return type == "face";
+}

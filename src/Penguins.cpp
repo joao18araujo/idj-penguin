@@ -86,3 +86,11 @@ void Penguins::shoot(){
 
   Game::get_instance().get_state().add_object(bullet);
 }
+
+void Penguins::notify_collision(GameObject & object){
+
+}
+
+bool Penguins::is(string type){
+  return type == "penguins";
+}

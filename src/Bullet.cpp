@@ -34,3 +34,11 @@ void Bullet::render(){
 bool Bullet::is_dead(){
   return distance_left <= 0;
 }
+
+void Bullet::notify_collision(GameObject & object){
+
+}
+
+bool Bullet::is(string type){
+  return type == "bullet";
+}

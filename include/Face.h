@@ -8,7 +8,7 @@ class Face : public GameObject{
 private:
   int hitpoints;
   Sprite sprite;
-  
+
 public:
   Face(float x, float y);
 
@@ -18,6 +18,9 @@ public:
   bool is_dead();
 
   void take_damage(int damage);
+
+  void notify_collision(GameObject & object);
+  bool is(string type);
 };
 
 #endif

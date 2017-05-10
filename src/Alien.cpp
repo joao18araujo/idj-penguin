@@ -112,3 +112,11 @@ bool Alien::arrived(Vector pos){
 
   return delta_x <= EPS and delta_y <= EPS;
 }
+
+void Alien::notify_collision(GameObject & object){
+
+}
+
+bool Alien::is(string type){
+  return type == "alien";
+}

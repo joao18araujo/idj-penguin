@@ -5,7 +5,7 @@
 #include "Sprite.h"
 #include "Vector.h"
 
-class Minion : GameObject{
+class Minion : public GameObject{
 private:
 
   GameObject * center;
@@ -22,6 +22,9 @@ public:
   bool is_dead();
   void shoot(Vector pos);
   float distance(Vector pos);
+
+  void notify_collision(GameObject & object);
+  bool is(string type);
 };
 
 #endif

@@ -57,3 +57,11 @@ void Minion::shoot(Vector pos){
 float Minion::distance(Vector pos){
   return hypot(pos.x - box.get_x(), pos.y - box.get_y());
 }
+
+void Minion::notify_collision(GameObject & object){
+
+}
+
+bool Minion::is(string type){
+  return type == "minion";
+}

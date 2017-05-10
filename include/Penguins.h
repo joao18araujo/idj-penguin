@@ -23,6 +23,8 @@ public:
   bool is_dead();
 
   void shoot();
+  void notify_collision(GameObject & object);
+  bool is(string type);
 
   static Penguins * player;
 };
