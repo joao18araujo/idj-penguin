@@ -38,6 +38,7 @@ Penguins::~Penguins(){
 void Penguins::update(float delta){
   InputManager inputManager = InputManager::get_instance();
 
+  timer.update(delta);
   if(inputManager.is_key_down(SDLK_w)){
     linear_speed = min(linear_speed + ACCELERATION * delta, SPEED_LIMIT);
   }
@@ -51,7 +52,10 @@ void Penguins::update(float delta){
     rotation = fmod(rotation + ANGULAR_SPEED * delta, 2 * PI);
   }
   if(inputManager.mouse_press(InputManager::LEFT_MOUSE_BUTTON)){
-    shoot();
+    if(timer.get() >= 50){
+      shoot();
+      timer.restart();
+    }
   }
 
   int x = inputManager.get_mouse_x() - Camera::pos[LAYER].x;

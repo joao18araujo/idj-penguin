@@ -4,6 +4,7 @@
 #include "GameObject.h"
 #include "Sprite.h"
 #include "Vector.h"
+#include "Timer.h"
 
 class Penguins : public GameObject{
 private:
@@ -13,6 +14,7 @@ private:
   float linear_speed;
   float cannon_angle;
   int hp;
+  Timer timer;
 
 public:
   Penguins(float x, float y);
