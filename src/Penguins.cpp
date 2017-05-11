@@ -81,14 +81,23 @@ bool Penguins::is_dead(){
 void Penguins::shoot(){
   Vector v;
   v.transform(box.get_width() * 0.5, cannon_angle);
-  Bullet * bullet = new Bullet(box.get_x() + v.x, box.get_y() + v.y, cannon_angle, 5, 500, 4, 6,"penguinbullet.png");
+  Bullet * bullet = new Bullet(box.get_x() + v.x, box.get_y() + v.y, cannon_angle, 5, 500, 4, 6,"penguinbullet.png", "alien");
   bullet->rotation = cannon_angle;
 
   Game::get_instance().get_state().add_object(bullet);
 }
 
 void Penguins::notify_collision(GameObject & object){
-  hp -= 10;
+
+  if(object.is("bullet")){
+    Bullet & b = dynamic_cast<Bullet &>(object);
+    if(b.target("penguins")){
+      hp -= 10;
+    }
+  }
+  if(is_dead()){
+    Camera::unfollow();
+  }
 }
 
 bool Penguins::is(string type){

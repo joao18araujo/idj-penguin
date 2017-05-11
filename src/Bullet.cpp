@@ -8,9 +8,10 @@
 #define LAYER 0
 
 Bullet::Bullet(float x, float y, float angle, float m_speed, float max_distance,
-                float frame_count, float frame_time, string sp){
+                float frame_count, float frame_time, string sp, string ctarget){
   sprite = Sprite(sp, frame_count, frame_time);
   box = Rectangle(x, y, sprite.get_width(), sprite.get_height());
+  m_target = ctarget;
 
   modular_speed = m_speed;
   speed.transform(modular_speed, angle);
@@ -36,11 +37,15 @@ bool Bullet::is_dead(){
 }
 
 void Bullet::notify_collision(GameObject & object){
-  if(not object.is("bullet")){
+  if(object.is(m_target)){
     distance_left = 0;
   }
 }
 
 bool Bullet::is(string type){
   return type == "bullet";
+}
+
+bool Bullet::target(string ctarget){
+  return m_target == ctarget;
 }

@@ -42,7 +42,7 @@ void Face::take_damage(int damage){
   hitpoints -= damage;
 }
 
-void Face::notify_collision(GameObject & object){
+void Face::notify_collision(GameObject &){
 
 }
 

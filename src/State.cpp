@@ -66,7 +66,6 @@ void State::update(float delta){
       auto a = object_array[i].get();
       auto b = object_array[j].get();
       if(Collision::is_colliding(a->box, b->box, a->rotation, b->rotation)){
-        printf("COLIDIU %f\n", time(NULL));
         a->notify_collision(*b);
         b->notify_collision(*a);
       }

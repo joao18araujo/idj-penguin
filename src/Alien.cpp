@@ -2,6 +2,7 @@
 
 #include "InputManager.h"
 #include "Camera.h"
+#include "Bullet.h"
 
 #include <cmath>
 #include <ctime>
@@ -16,7 +17,7 @@
 
 Alien::Alien(float x, float y, int m_minions){
   sprite = Sprite("alien.png");
-  hp = 30;
+  hp = 100;
   speed = Vector(1, 1);
   box = Rectangle(x, y, sprite.get_width(), sprite.get_height());
 
@@ -114,9 +115,12 @@ bool Alien::arrived(Vector pos){
 }
 
 void Alien::notify_collision(GameObject & object){
-  hp -= 10;
+  if(object.is("bullet")){
+    Bullet & b = dynamic_cast<Bullet &>(object);
+    if(b.target("alien")) hp -= 10;
+  }
 }
 
 bool Alien::is(string type){
-  return type == "Alien";
+  return type == "alien";
 }
