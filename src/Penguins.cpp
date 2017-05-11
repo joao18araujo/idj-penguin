@@ -88,7 +88,7 @@ void Penguins::shoot(){
 }
 
 void Penguins::notify_collision(GameObject & object){
-
+  hp -= 10;
 }
 
 bool Penguins::is(string type){

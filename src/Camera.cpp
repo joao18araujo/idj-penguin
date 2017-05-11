@@ -6,6 +6,11 @@ Vector Camera::speed;
 Vector Camera::pos[LAYERS];
 float Camera::layer_speed[LAYERS] = {4, 6, 16, 32};
 
+#define PENGUIN_LAYER 0
+#define SCREEN_WIDTH 1024
+#define SCREEN_HEIGHT 600
+//FIXME layer virar variável
+
 void Camera::follow(GameObject * new_focus){
   focus = new_focus;
 }
@@ -38,5 +43,9 @@ void Camera::update(float delta){
     }
   }else{
     //TODO proximo tX
+    for(int i = 0; i < LAYERS; ++i){
+      pos[i].x = (-focus->box.get_x() + SCREEN_WIDTH/2.0) * layer_speed[i]/layer_speed[PENGUIN_LAYER];
+      pos[i].y = (-focus->box.get_y() + SCREEN_HEIGHT/2.0) * layer_speed[i]/layer_speed[PENGUIN_LAYER];
+    }
   }
 }

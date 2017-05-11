@@ -73,7 +73,6 @@ void Sprite::set_frame_time(float cframe_time){
 
 void Sprite::update(float delta){
   time_elapsed += delta;
-
   if(time_elapsed >= frame_time){
     time_elapsed = 0;
     current_frame =  (current_frame + 1) % frame_count;

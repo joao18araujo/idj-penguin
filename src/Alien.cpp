@@ -114,9 +114,9 @@ bool Alien::arrived(Vector pos){
 }
 
 void Alien::notify_collision(GameObject & object){
-
+  hp -= 10;
 }
 
 bool Alien::is(string type){
-  return type == "alien";
+  return type == "Alien";
 }

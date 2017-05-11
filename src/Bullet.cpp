@@ -36,7 +36,9 @@ bool Bullet::is_dead(){
 }
 
 void Bullet::notify_collision(GameObject & object){
-
+  if(not object.is("bullet")){
+    distance_left = 0;
+  }
 }
 
 bool Bullet::is(string type){

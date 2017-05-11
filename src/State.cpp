@@ -6,6 +6,9 @@
 #include "Camera.h"
 #include "Alien.h"
 #include "Penguins.h"
+#include "Collision.h"
+
+#include <ctime>
 
 #define LAYER 0
 
@@ -16,6 +19,7 @@ State::State(){
 
   object_array.emplace_back(new Alien(512, 300, 8));
   object_array.emplace_back(new Penguins(704, 640));
+  Camera::follow(object_array.back().get());
 }
 
 State::~State(){
@@ -54,6 +58,18 @@ void State::update(float delta){
     if(object_array[it]->is_dead()){
       object_array.erase(object_array.begin() + it);
       break;
+    }
+  }
+
+  for(unsigned i = 0; i < object_array.size(); ++i){
+    for(unsigned j = i + 1; j < object_array.size(); ++j){
+      auto a = object_array[i].get();
+      auto b = object_array[j].get();
+      if(Collision::is_colliding(a->box, b->box, a->rotation, b->rotation)){
+        printf("COLIDIU %f\n", time(NULL));
+        a->notify_collision(*b);
+        b->notify_collision(*a);
+      }
     }
   }
 }
