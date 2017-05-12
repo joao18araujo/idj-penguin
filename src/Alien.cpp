@@ -3,6 +3,8 @@
 #include "InputManager.h"
 #include "Camera.h"
 #include "Bullet.h"
+#include "Animation.h"
+#include "Game.h"
 
 #include <cmath>
 #include <ctime>
@@ -117,7 +119,14 @@ bool Alien::arrived(Vector pos){
 void Alien::notify_collision(GameObject & object){
   if(object.is("bullet")){
     Bullet & b = dynamic_cast<Bullet &>(object);
-    if(b.target("alien")) hp -= 10;
+    if(b.target("alien")){
+      hp -= 50;
+      if(is_dead()){
+        Animation * animation = new Animation(box.get_x(), box.get_y(), rotation, "aliendeath.png",
+                  4, 10, true);
+                  Game::get_instance().get_state().add_object(animation);
+      }
+    }
   }
 }
 

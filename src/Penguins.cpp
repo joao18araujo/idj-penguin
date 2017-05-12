@@ -4,6 +4,7 @@
 #include "Camera.h"
 #include "Bullet.h"
 #include "Game.h"
+#include "Animation.h"
 
 #include <algorithm>
 #include <cmath>
@@ -96,7 +97,12 @@ void Penguins::notify_collision(GameObject & object){
   if(object.is("bullet")){
     Bullet & b = dynamic_cast<Bullet &>(object);
     if(b.target("penguins")){
-      hp -= 10;
+      hp -= 50;
+      if(is_dead()){
+        Animation * animation = new Animation(box.get_x(), box.get_y(), rotation, "penguindeath.png",
+                  5, 10, true);
+                  Game::get_instance().get_state().add_object(animation);
+      }
     }
   }
   if(is_dead()){

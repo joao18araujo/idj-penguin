@@ -17,7 +17,7 @@ State::State(){
   tile_set = new TileSet(64, 64, "tileset.png");
   tile_map = new TileMap("tileMap.txt", tile_set);
 
-  object_array.emplace_back(new Alien(512, 300, 8));
+  object_array.emplace_back(new Alien(512, 600, 8));
   object_array.emplace_back(new Penguins(704, 640));
   Camera::follow(object_array.back().get());
 }

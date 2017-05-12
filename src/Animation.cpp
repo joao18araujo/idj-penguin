@@ -1,8 +1,12 @@
 #include "Animation.h"
 
+#include "Camera.h"
+
+#define LAYER 0
+
 Animation::Animation(float x, float y, float crotation, string csprite,
           int frame_count, float frame_time, bool ends){
-  sprite = csprite;
+  sprite = Sprite(csprite, frame_count, frame_time);
   rotation = crotation;
   box = Rectangle(x, y, sprite.get_width(), sprite.get_height());
   one_time_only = ends;
@@ -15,7 +19,9 @@ void Animation::update(float delta){
 }
 
 void Animation::render(){
-  sprite.render(box.get_x(), box.get_y(), rotation);
+  int x = box.get_draw_x()  + Camera::pos[LAYER].x;
+  int y = box.get_draw_y() + Camera::pos[LAYER].y;
+  sprite.render(x, y, rotation);
 }
 
 bool Animation::is_dead(){
