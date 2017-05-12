@@ -39,6 +39,7 @@ private:
   enum AlienState {MOVING, RESTING};
   AlienState state;
   Timer rest_timer;
+  float cooldown;
   Vector destination;
 
 public:

@@ -24,16 +24,16 @@ Minion::Minion(GameObject * minion_center, float arc_offset, float scale){
   sprite.set_scale_x(scale);
   sprite.set_scale_y(scale);
 
-  float x = center->box.get_x() + 130 * cos(arc);
-  float y = center->box.get_y() + 130 * sin(arc);
+  float x = center->box.get_x() + 100 * cos(arc);
+  float y = center->box.get_y() + 100 * sin(arc);
   box = Rectangle(x, y, sprite.get_width(), sprite.get_height());
 }
 
 void Minion::update(float delta){
   arc = fmod(arc + ANGULAR_SPEED * delta, 2 * PI);
   rotation = fmod(arc + PI/2, 2 * PI);
-  box.set_x(center->box.get_x() + 130 * cos(arc));
-  box.set_y(center->box.get_y() + 130 * sin(arc));
+  box.set_x(center->box.get_x() + 100 * cos(arc));
+  box.set_y(center->box.get_y() + 100 * sin(arc));
 }
 
 void Minion::render(){

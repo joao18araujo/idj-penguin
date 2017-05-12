@@ -28,6 +28,8 @@ Alien::Alien(float x, float y, int m_minions){
   speed = Vector(1, 1);
   box = Rectangle(x, y, sprite.get_width(), sprite.get_height());
   state = RESTING;
+  srand(clock());
+  cooldown = 50 + rand()%201;
 
   ++alien_count;
   srand(time(nullptr));
@@ -52,7 +54,7 @@ void Alien::update(float delta){
   switch(state){
     case RESTING:
       if(Penguins::player == nullptr) break;
-      if(rest_timer.get() < 300){
+      if(rest_timer.get() < cooldown){
         rest_timer.update(delta);
       }else{
         state = MOVING;
@@ -65,6 +67,7 @@ void Alien::update(float delta){
       break;
 
     case MOVING:
+      if(Penguins::player == nullptr) break;
       if(arrived(destination)){
         box.set_x(destination.x);
         box.set_y(destination.y);
