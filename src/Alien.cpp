@@ -5,6 +5,7 @@
 #include "Bullet.h"
 #include "Animation.h"
 #include "Game.h"
+#include "Penguins.h"
 
 #include <cmath>
 #include <ctime>
@@ -12,17 +13,23 @@
 
 #define SHOOT Alien::Action::ActionType::SHOOT
 #define MOVE Action::ActionType::MOVE
+#define RESTING AlienState::RESTING
+#define MOVING AlienState::MOVING
 #define EPS 8
 #define PI 3.14159265358979
 #define ANGLE_OFFSET PI/8
 #define ANGULAR_SPEED PI/128
+
+int Alien::alien_count = 0;
 
 Alien::Alien(float x, float y, int m_minions){
   sprite = Sprite("alien.png");
   hp = 100;
   speed = Vector(1, 1);
   box = Rectangle(x, y, sprite.get_width(), sprite.get_height());
+  state = RESTING;
 
+  ++alien_count;
   srand(time(nullptr));
 
   //preenche minions
@@ -36,58 +43,41 @@ Alien::Alien(float x, float y, int m_minions){
 }
 
 Alien::~Alien(){
-
+  ++alien_count;
 }
 
 void Alien::update(float delta){
   rotation = fmod(rotation + ANGULAR_SPEED * delta, 2 * PI);
 
-  InputManager inputManager = InputManager::get_instance();
-
-  bool left_click = inputManager.mouse_press(InputManager::LEFT_MOUSE_BUTTON);
-  bool right_click = inputManager.mouse_press(InputManager::RIGHT_MOUSE_BUTTON);
-
-  if(left_click or right_click) {
-    int x = inputManager.get_mouse_x() - Camera::pos[LAYER].x;
-    int y = inputManager.get_mouse_y() - Camera::pos[LAYER].y;
-
-    Action::ActionType type = left_click ? SHOOT : MOVE;
-    task_queue.emplace(type, x, y);
-  }
-
-  if(not task_queue.empty()){
-    Action action = task_queue.front();
-    if(action.type == SHOOT){
-      float min_distance = 1e9;
-      Minion minion;
-
-      for(auto & m : minion_array){
-        float distance = m.distance(action.pos);
-        if(distance < min_distance){
-          minion = m;
-          min_distance = distance;
-        }
-      }
-
-      minion.shoot(action.pos);
-
-      task_queue.pop();
-    }
-    else if(action.type == MOVE){
-      if(arrived(action.pos)){
-        task_queue.pop();
-        box.set_x(action.pos.x);
-        box.set_y(action.pos.y);
+  switch(state){
+    case RESTING:
+      if(Penguins::player == nullptr) break;
+      if(rest_timer.get() < 300){
+        rest_timer.update(delta);
       }else{
-        double angle = atan2(action.pos.y - box.get_y(), action.pos.x - box.get_x());
+        state = MOVING;
+        rest_timer.restart();
+        Rectangle rect = Penguins::player->box;
+        destination = Vector(rect.get_x(), rect.get_y());
+        double angle = atan2(rect.get_y() - box.get_y(), rect.get_x() - box.get_x());
+        speed.transform(4, angle);
+      }
+      break;
 
-        speed.x = cos(angle) * 4;
-        speed.y = sin(angle) * 4;
+    case MOVING:
+      if(arrived(destination)){
+        box.set_x(destination.x);
+        box.set_y(destination.y);
 
+        shoot();
+        state = RESTING;
+      }else{
         box.set_x(box.get_x() + speed.x * delta);
         box.set_y(box.get_y() + speed.y * delta);
       }
-    }
+      break;
+      default:
+      break;
   }
 
   for(auto & minion : minion_array){
@@ -132,4 +122,22 @@ void Alien::notify_collision(GameObject & object){
 
 bool Alien::is(string type){
   return type == "alien";
+}
+
+void Alien::shoot(){
+  float min_distance = 1e9;
+  Minion minion;
+
+  Rectangle rect = Penguins::player->box;
+  Vector v = Vector(rect.get_x(), rect.get_y());
+
+  for(auto & m : minion_array){
+    float distance = m.distance(v);
+    if(distance < min_distance){
+      minion = m;
+      min_distance = distance;
+    }
+  }
+
+  minion.shoot(v);
 }

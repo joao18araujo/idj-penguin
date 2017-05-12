@@ -11,13 +11,13 @@ Sprite::Sprite(){
   scale_x = scale_y = 1;
   frame_count = 1;
   frame_time = 1;
-  current_frame = 0;
+  current_frame = time_elapsed = 0;
 }
 
 Sprite::Sprite(string file, int cframe_count, float cframe_time){
   frame_count = cframe_count;
   frame_time = cframe_time;
-  current_frame = 0;
+  current_frame = time_elapsed = 0;
   texture = nullptr;
   open("res/img/" + file);
   scale_x = scale_y = 1;
