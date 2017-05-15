@@ -89,7 +89,7 @@ void Penguins::shoot(){
   Bullet * bullet = new Bullet(box.get_x() + v.x, box.get_y() + v.y, cannon_angle, 5, 500, 4, 6,"penguinbullet.png", "alien");
   bullet->rotation = cannon_angle;
 
-  Game::get_instance().get_state().add_object(bullet);
+  Game::get_instance().get_current_state().add_object(bullet);
 }
 
 void Penguins::notify_collision(GameObject & object){
@@ -101,7 +101,7 @@ void Penguins::notify_collision(GameObject & object){
       if(is_dead()){
         Animation * animation = new Animation(box.get_x(), box.get_y(), rotation, "penguindeath.png",
                   5, 10, true);
-                  Game::get_instance().get_state().add_object(animation);
+                  Game::get_instance().get_current_state().add_object(animation);
       }
     }
   }

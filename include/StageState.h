@@ -7,6 +7,7 @@
 #include <vector>
 #include <memory>
 
+#include "State.h"
 #include "GameObject.h"
 #include "Sprite.h"
 #include "TileSet.h"
@@ -15,24 +16,23 @@
 using std::vector;
 using std::unique_ptr;
 
-class StageState{
+class StageState : public State{
 private:
   Sprite * background;
-  bool m_quit_requested = false;
-  vector<unique_ptr<GameObject>> object_array;
   TileSet * tile_set;
   TileMap * tile_map;
 
 public:
-  State();
-  ~State();
+  StageState();
+  ~StageState();
 
-  bool quit_requested();
-  void load_assets();
   void update(float delta);
   void render();
-  void add_object(float mouse_x, float mouse_y);
-  void add_object(GameObject * ptr);
+
+  void pause();
+  void resume();
+
+  void load_assets();
 };
 
 #endif

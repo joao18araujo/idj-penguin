@@ -51,7 +51,7 @@ void Minion::shoot(Vector pos){
   Bullet * bullet = new Bullet(box.get_x(), box.get_y(), angle, 2, 500, 3, 6,"minionbullet2.png", "penguins");
   bullet->rotation = angle;
 
-  Game::get_instance().get_state().add_object(bullet);
+  Game::get_instance().get_current_state().add_object(bullet);
 }
 
 float Minion::distance(Vector pos){

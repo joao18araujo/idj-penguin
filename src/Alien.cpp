@@ -117,7 +117,7 @@ void Alien::notify_collision(GameObject & object){
       if(is_dead()){
         Animation * animation = new Animation(box.get_x(), box.get_y(), rotation, "aliendeath.png",
                   4, 10, true);
-                  Game::get_instance().get_state().add_object(animation);
+                  Game::get_instance().get_current_state().add_object(animation);
       }
     }
   }

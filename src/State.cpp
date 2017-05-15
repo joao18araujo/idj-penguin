@@ -2,7 +2,11 @@
 #include "Collision.h"
 
 State::State(){
-  pop_requested = quit_requested = false;
+  m_pop_requested = m_quit_requested = false;
+}
+
+State::~State(){
+
 }
 
 void State::add_object(GameObject * object){
@@ -42,4 +46,8 @@ void State::render_array(){
   for(auto & go : object_array){
     go->render();
   }
+}
+
+void State::load_assets(){
+  //nothing TODO
 }

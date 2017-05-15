@@ -1,6 +1,8 @@
 #ifndef STATE_H
 #define STATE_H
 
+#include "GameObject.h"
+
 #include <vector>
 #include <memory>
 
@@ -28,6 +30,8 @@ public:
   virtual void resume() = 0;
 
   virtual void add_object(GameObject * object);
+
+  void load_assets();
 
   bool pop_requested();
   bool quit_requested();
