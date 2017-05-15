@@ -39,11 +39,15 @@ Game::Game(string title, int width, int height){
     exit(-1);
   }
 
-  state = new State();
+  stored_state = nullptr;
 }
 
 Game::~Game(){
-  delete state;
+  if(stored_state != nullptr)
+    delete store_state;
+
+  while(not state_stack.empty())
+    state_stack.pop();
 
   IMG_Quit();
   SDL_DestroyRenderer(renderer);
@@ -51,7 +55,24 @@ Game::~Game(){
   SDL_Quit();
 }
 
+Game & Game::get_instance(){
+  return *instance;
+}
+
+SDL_Renderer * Game::get_renderer(){
+  return renderer;
+}
+
+State & Game::get_current_state(){
+  return state_stack.top();
+}
+
+void Game::push(State * state){
+  stored_state = state;
+}
+
 void Game::run(){
+  //TODO condição de saída do loop
   this->calculate_delta_time();
 
   state->load_assets();
@@ -61,21 +82,10 @@ void Game::run(){
     state->render();
 
     SDL_RenderPresent(renderer);
+    manage_stack();
     SDL_Delay(33);
 
   }
-}
-
-Game & Game::get_instance(){
-  return *instance;
-}
-
-State & Game::get_state(){
-  return *state;
-}
-
-SDL_Renderer * Game::get_renderer(){
-  return renderer;
 }
 
 void Game::calculate_delta_time(){
@@ -88,4 +98,19 @@ void Game::calculate_delta_time(){
 
 float Game::get_delta_time(){
   return delta;
+}
+
+void Game::manage_stack(){
+  if(get_current_state().quit_requested()){
+    state_stack.pop();
+    if(not state_stack.empty())
+      get_current_state().resume();
+
+    if(stored_state != nullptr){
+      if(not state_stack.empty())
+        get_current_state().pause();
+      state_stack.emplace_back(stored_state);
+      stored_state = nullptr;
+    }
+  }
 }

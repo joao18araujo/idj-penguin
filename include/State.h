@@ -1,38 +1,36 @@
 #ifndef STATE_H
 #define STATE_H
 
-#include "SDL2/SDL.h"
-
-#include <iostream>
 #include <vector>
 #include <memory>
-
-#include "GameObject.h"
-#include "Sprite.h"
-#include "TileSet.h"
-#include "TileMap.h"
 
 using std::vector;
 using std::unique_ptr;
 
 class State{
-private:
-  Sprite * background;
-  bool m_quit_requested = false;
+protected:
+  bool m_pop_requested;
+  bool m_quit_requested;
+
   vector<unique_ptr<GameObject>> object_array;
-  TileSet * tile_set;
-  TileMap * tile_map;
+
+  virtual void update_array(float delta);
+  virtual void render_array();
 
 public:
   State();
-  ~State();
+  virtual ~State();
 
+  virtual void update(float delta) = 0;
+  virtual void render() = 0;
+
+  virtual void pause() = 0;
+  virtual void resume() = 0;
+
+  virtual void add_object(GameObject * object);
+
+  bool pop_requested();
   bool quit_requested();
-  void load_assets();
-  void update(float delta);
-  void render();
-  void add_object(float mouse_x, float mouse_y);
-  void add_object(GameObject * ptr);
 };
 
 #endif
