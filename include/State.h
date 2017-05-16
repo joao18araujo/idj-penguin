@@ -31,7 +31,7 @@ public:
 
   virtual void add_object(GameObject * object);
 
-  void load_assets();
+  virtual void load_assets();
 
   bool pop_requested();
   bool quit_requested();

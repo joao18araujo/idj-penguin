@@ -49,5 +49,5 @@ void State::render_array(){
 }
 
 void State::load_assets(){
-  //nothing TODO
+  //NOTHING TO DO
 }

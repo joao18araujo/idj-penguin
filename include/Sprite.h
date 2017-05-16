@@ -4,12 +4,14 @@
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_image.h"
 #include <iostream>
+#include <memory>
 
 using std::string;
+using std::shared_ptr;
 
 class Sprite{
 private:
-  SDL_Texture * texture = nullptr;
+  shared_ptr<SDL_Texture> texture = nullptr;
   int width;
   int height;
   int frame_count;

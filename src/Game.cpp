@@ -1,6 +1,7 @@
 #include "Game.h"
 
 #include "InputManager.h"
+#include "Resources.h"
 
 #include <cstdlib>
 
@@ -75,6 +76,7 @@ void Game::run(){
   //TODO condição de saída do loop
   if(stored_state != nullptr){
     state_stack.emplace(stored_state);
+    get_current_state().load_assets();
     stored_state = nullptr;
   }else{
     return;
@@ -108,6 +110,8 @@ float Game::get_delta_time(){
 void Game::manage_stack(){
   if(get_current_state().quit_requested()){
     state_stack.pop();
+    Resources::clear_images();
+
     if(not state_stack.empty())
       get_current_state().resume();
   }
@@ -116,6 +120,7 @@ void Game::manage_stack(){
     if(not state_stack.empty())
       get_current_state().pause();
     state_stack.emplace(stored_state);
+    get_current_state().load_assets();
     stored_state = nullptr;
   }
 }

@@ -20,9 +20,6 @@ StageState::StageState(){
   tile_set = new TileSet(64, 64, "tileset.png");
   tile_map = new TileMap("tileMap.txt", tile_set);
 
-  //FIXME
-  load_assets();
-
   add_object(new Alien(512, 600, 6));
   add_object(new Alien(800, 540, 6));
   add_object(new Alien(0, 0, 6));

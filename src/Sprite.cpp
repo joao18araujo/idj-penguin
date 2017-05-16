@@ -20,6 +20,7 @@ Sprite::Sprite(string file, int cframe_count, float cframe_time){
   current_frame = time_elapsed = 0;
   texture = nullptr;
   open("res/img/" + file);
+
   scale_x = scale_y = 1;
 }
 
@@ -42,12 +43,12 @@ void Sprite::open(string file){
 
   texture = Resources::get_image(file);
 
-  int query_texture = SDL_QueryTexture(texture, nullptr, nullptr,
+  int query_texture = SDL_QueryTexture(texture.get(), nullptr, nullptr,
     &width, &height);
 
   width /= frame_count;
   if(query_texture){
-    printf("%s\n", SDL_GetError());
+    printf("Open: %s\n", SDL_GetError());
     exit(-1);
   }
 
@@ -84,11 +85,11 @@ void Sprite::render(int x, int y, float angle){
   SDL_Rect dstrect = SDL_Rect{x, y, (int)(clip_rect.w * scale_x), (int)(clip_rect.h * scale_y)};
 
   angle *= (180 / PI);
-  int render_copy = SDL_RenderCopyEx(Game::get_instance().get_renderer(), texture,
+  int render_copy = SDL_RenderCopyEx(Game::get_instance().get_renderer(), texture.get(),
     &clip_rect, &dstrect, angle, nullptr, SDL_FLIP_NONE);
   if(render_copy){
-    printf("%s\n", SDL_GetError());
-    exit(-1);
+    printf("Render: %s\n", SDL_GetError());
+    //exit(-1);
   }
 }
 
