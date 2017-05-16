@@ -3,9 +3,9 @@
 #include "Game.h"
 
 unordered_map<string, shared_ptr<SDL_Texture> > Resources::image_table;
+unordered_map<string, shared_ptr<Mix_Music> > Resources::music_table;
 
 shared_ptr<SDL_Texture> Resources::get_image(string file){
-
   if(image_table.find(file) == image_table.end()){
       SDL_Texture * tx =
              IMG_LoadTexture(Game::get_instance().get_renderer(), file.c_str());
@@ -28,6 +28,33 @@ void Resources::clear_images(){
   for(auto texture : image_table){
     if(texture.second.unique()){
       image_table.erase(texture.first);
+    }
+  }
+}
+
+shared_ptr<Mix_Music> Resources::get_music(string file){
+  if(music_table.find(file) == music_table.end()){
+      Mix_Music * mx = Mix_LoadMUS(file.c_str());
+
+      if(mx == nullptr){
+       printf("%s: %s\n", SDL_GetError(), file.c_str());
+       exit(-1);
+      }
+
+      shared_ptr<Mix_Music> music(mx,
+                    [](Mix_Music * msc) { Mix_FreeMusic(msc); });
+
+      music_table.emplace(file, music);
+  }
+
+  return music_table[file];
+
+}
+
+void Resources::clear_music(){
+  for(auto music : music_table){
+    if(music.second.unique()){
+      music_table.erase(music.first);
     }
   }
 }

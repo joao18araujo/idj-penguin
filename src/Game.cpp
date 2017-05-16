@@ -40,6 +40,21 @@ Game::Game(string title, int width, int height){
     exit(-1);
   }
 
+  int mix_flags = MIX_INIT_OGG | MIX_INIT_MP3;
+  int sdl_mix = Mix_Init(mix_flags);
+  if(sdl_mix != mix_flags){
+    printf("%s\n", SDL_GetError());
+    exit(-1);
+  }
+
+  int mix_open = Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT,
+                               MIX_DEFAULT_CHANNELS, 1024);
+  if(mix_open){
+    printf("%s\n", SDL_GetError());
+    exit(-1);
+  }
+
+
   stored_state = nullptr;
 }
 
