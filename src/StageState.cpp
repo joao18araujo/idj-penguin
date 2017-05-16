@@ -1,12 +1,15 @@
 #include "StageState.h"
+
 #include "Face.h"
 #include "Sprite.h"
 #include "Vector.h"
+#include "Game.h"
 #include "InputManager.h"
 #include "Camera.h"
 #include "Alien.h"
 #include "Penguins.h"
 #include "Collision.h"
+#include "TitleState.h"
 
 #include <ctime>
 
@@ -41,6 +44,7 @@ void StageState::update(float delta){
 
   if(inputManager.key_press(SDLK_ESCAPE) or inputManager.quit_requested()){
     m_quit_requested = true;
+    Game::get_instance().push(new TitleState());
     return;
   }
 
