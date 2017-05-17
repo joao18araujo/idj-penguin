@@ -15,6 +15,7 @@ using std::shared_ptr;
 class Resources{
   static unordered_map<string, shared_ptr<SDL_Texture> > image_table;
   static unordered_map<string, shared_ptr<Mix_Music> > music_table;
+  static unordered_map<string, shared_ptr<Mix_Chunk> > sound_table;
 private:
 
 public:
@@ -23,6 +24,9 @@ public:
 
   static shared_ptr<Mix_Music> get_music(string file);
   static void clear_music();
+
+  static shared_ptr<Mix_Chunk> get_sound(string file);
+  static void clear_sound();
 };
 
 #endif

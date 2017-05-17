@@ -5,6 +5,7 @@
 #include "Bullet.h"
 #include "Game.h"
 #include "Animation.h"
+#include "Sound.h"
 
 #include <algorithm>
 #include <cmath>
@@ -102,6 +103,9 @@ void Penguins::notify_collision(GameObject & object){
         Animation * animation = new Animation(box.get_x(), box.get_y(), rotation, "penguindeath.png",
                   5, 10, true);
                   Game::get_instance().get_current_state().add_object(animation);
+
+        Sound * sound = new Sound("boom.wav");
+        sound->play(0);
       }
     }
   }

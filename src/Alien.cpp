@@ -6,6 +6,7 @@
 #include "Animation.h"
 #include "Game.h"
 #include "Penguins.h"
+#include "Sound.h"
 
 #include <cmath>
 #include <ctime>
@@ -118,6 +119,8 @@ void Alien::notify_collision(GameObject & object){
         Animation * animation = new Animation(box.get_x(), box.get_y(), rotation, "aliendeath.png",
                   4, 10, true);
                   Game::get_instance().get_current_state().add_object(animation);
+        Sound * sound = new Sound("boom.wav");
+        sound->play(0);
       }
     }
   }

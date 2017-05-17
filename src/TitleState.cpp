@@ -6,7 +6,7 @@ TitleState::TitleState(){
   background = Sprite("title.jpg");
 }
 
-void TitleState::update(float delta){
+void TitleState::update(float){
   InputManager inputManager = InputManager::get_instance();
 
   if(inputManager.key_press(SDLK_ESCAPE) or inputManager.quit_requested()){

@@ -4,6 +4,7 @@
 
 unordered_map<string, shared_ptr<SDL_Texture> > Resources::image_table;
 unordered_map<string, shared_ptr<Mix_Music> > Resources::music_table;
+unordered_map<string, shared_ptr<Mix_Chunk> > Resources::sound_table;
 
 shared_ptr<SDL_Texture> Resources::get_image(string file){
   if(image_table.find(file) == image_table.end()){
@@ -37,7 +38,7 @@ shared_ptr<Mix_Music> Resources::get_music(string file){
       Mix_Music * mx = Mix_LoadMUS(file.c_str());
 
       if(mx == nullptr){
-       printf("%s: %s\n", SDL_GetError(), file.c_str());
+       printf("%s: %s\n", Mix_GetError(), file.c_str());
        exit(-1);
       }
 
@@ -55,6 +56,33 @@ void Resources::clear_music(){
   for(auto music : music_table){
     if(music.second.unique()){
       music_table.erase(music.first);
+    }
+  }
+}
+
+shared_ptr<Mix_Chunk> Resources::get_sound(string file){
+  if(sound_table.find(file) == sound_table.end()){
+      Mix_Chunk * ck = Mix_LoadWAV(file.c_str());
+
+      if(ck == nullptr){
+       printf("%s: %s\n", Mix_GetError(), file.c_str());
+       exit(-1);
+      }
+
+      shared_ptr<Mix_Chunk> sound(ck,
+                    [](Mix_Chunk * chk) { Mix_FreeChunk(chk); });
+
+      sound_table.emplace(file, sound);
+  }
+
+  return sound_table[file];
+
+}
+
+void Resources::clear_sound(){
+  for(auto sound : sound_table){
+    if(sound.second.unique()){
+      sound_table.erase(sound.first);
     }
   }
 }
