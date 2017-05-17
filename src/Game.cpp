@@ -126,6 +126,7 @@ void Game::manage_stack(){
   if(get_current_state().quit_requested()){
     state_stack.pop();
     Resources::clear_images();
+    Resources::clear_music();
 
     if(not state_stack.empty())
       get_current_state().resume();

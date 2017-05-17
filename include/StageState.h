@@ -12,6 +12,7 @@
 #include "Sprite.h"
 #include "TileSet.h"
 #include "TileMap.h"
+#include "Music.h"
 
 using std::vector;
 using std::unique_ptr;
@@ -21,6 +22,7 @@ private:
   Sprite * background;
   TileSet * tile_set;
   TileMap * tile_map;
+  Music * music;
 
 public:
   StageState();

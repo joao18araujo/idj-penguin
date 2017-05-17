@@ -24,6 +24,10 @@ StageState::StageState(){
   add_object(new Alien(800, 540, 6));
   add_object(new Alien(0, 0, 6));
   add_object(new Penguins(704, 640));
+
+  music = new Music("stageState.ogg");
+  music->play(-1);
+
   Camera::follow(object_array.back().get());
 }
 
