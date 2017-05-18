@@ -44,6 +44,15 @@ float Rectangle::get_height() const{
   return height;
 }
 
+void Rectangle::set_width(float w){
+  width = w;
+}
+
+void Rectangle::set_height(float h){
+  height = h;
+}
+
+
 Vector Rectangle::get_center() const{
   return Vector(x, y);
 }

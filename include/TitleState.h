@@ -3,10 +3,14 @@
 
 #include "State.h"
 #include "Sprite.h"
+#include "Text.h"
+#include "Timer.h"
 
 class TitleState : public State{
 private:
   Sprite background;
+  Text * text;
+  Timer timer;
 
 public:
   TitleState();

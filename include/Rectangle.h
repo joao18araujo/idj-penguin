@@ -24,6 +24,8 @@ public:
   float get_draw_y() const;
   float get_width() const;
   float get_height() const;
+  void set_width(float w);
+  void set_height(float h);
   Vector get_center() const;
 };
 
