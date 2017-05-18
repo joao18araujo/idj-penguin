@@ -2,9 +2,12 @@
 
 #include "Game.h"
 
+#include <algorithm>
+
 unordered_map<string, shared_ptr<SDL_Texture> > Resources::image_table;
 unordered_map<string, shared_ptr<Mix_Music> > Resources::music_table;
 unordered_map<string, shared_ptr<Mix_Chunk> > Resources::sound_table;
+unordered_map<string, shared_ptr<TTF_Font> > Resources::font_table;
 
 shared_ptr<SDL_Texture> Resources::get_image(string file){
   if(image_table.find(file) == image_table.end()){
@@ -83,6 +86,34 @@ void Resources::clear_sound(){
   for(auto sound : sound_table){
     if(sound.second.unique()){
       sound_table.erase(sound.first);
+    }
+  }
+}
+
+shared_ptr<TTF_Font> Resources::get_font(string file, int size){
+  string tsize = std::to_string(size);
+  if(font_table.find(file + tsize) == font_table.end()){
+      TTF_Font * ft = TTF_OpenFont(file.c_str(), size);
+
+      if(ft == nullptr){
+       printf("%s: %s\n", SDL_GetError(), file.c_str());
+       exit(-1);
+      }
+
+      shared_ptr<TTF_Font> font(ft,
+                    [](TTF_Font * fnt) { TTF_CloseFont(fnt); });
+
+      font_table.emplace(file + tsize, font);
+  }
+
+  return font_table[file + tsize];
+
+}
+
+void Resources::clear_fonts(){
+  for(auto font : font_table){
+    if(font.second.unique()){
+      font_table.erase(font.first);
     }
   }
 }

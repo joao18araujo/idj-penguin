@@ -89,7 +89,7 @@ void Sprite::render(int x, int y, float angle){
     &clip_rect, &dstrect, angle, nullptr, SDL_FLIP_NONE);
   if(render_copy){
     printf("Render: %s\n", SDL_GetError());
-    //exit(-1);
+    exit(-1);
   }
 }
 

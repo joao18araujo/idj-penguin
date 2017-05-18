@@ -54,6 +54,11 @@ Game::Game(string title, int width, int height){
     exit(-1);
   }
 
+  int ttf_init = TTF_Init();
+  if(ttf_init){
+    printf("%s\n", TTF_GetError());
+    exit(-1);
+  }
 
   stored_state = nullptr;
 }
@@ -65,6 +70,8 @@ Game::~Game(){
   while(not state_stack.empty())
     state_stack.pop();
 
+  TTF_Quit();
+  Mix_Quit();
   IMG_Quit();
   SDL_DestroyRenderer(renderer);
   SDL_DestroyWindow(window);
