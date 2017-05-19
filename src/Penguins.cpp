@@ -60,15 +60,24 @@ void Penguins::update(float delta){
     }
   }
 
-  int x = inputManager.get_mouse_x() - Camera::pos[LAYER].x;
-  int y = inputManager.get_mouse_y() - Camera::pos[LAYER].y;
-  float delta_x = x - box.get_x();
-  float delta_y = y - box.get_y();
+  int mouse_x = inputManager.get_mouse_x() - Camera::pos[LAYER].x;
+  int mouse_y = inputManager.get_mouse_y() - Camera::pos[LAYER].y;
+  float delta_x = mouse_x - box.get_x();
+  float delta_y = mouse_y - box.get_y();
   cannon_angle = delta_x ? atan2(delta_y, delta_x) : 0;
 
   speed.transform(linear_speed, rotation);
-  box.set_x(box.get_x() + speed.x * delta);
-  box.set_y(box.get_y() + speed.y * delta);
+
+  float x = box.get_x() + speed.x * delta;
+  if(x < 0) x = 0;
+  if(x > 1407) x = 1408;
+
+  float y = box.get_y() + speed.y * delta;
+  if(y < 0) y = 0;
+  if(y > 1280) y = 1280;
+
+  box.set_x(x);
+  box.set_y(y);
 }
 
 void Penguins::render(){
