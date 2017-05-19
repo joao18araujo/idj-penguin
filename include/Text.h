@@ -27,6 +27,7 @@ private:
   SDL_Rect clip_rect;
 
 public:
+  Text();
   Text(string cfont_file, int cfont_size, TextStyle cstyle, string ctext,
        SDL_Color ccolor, int x = 0, int y = 0);
   ~Text();

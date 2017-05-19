@@ -134,6 +134,7 @@ void Game::manage_stack(){
     state_stack.pop();
     Resources::clear_images();
     Resources::clear_music();
+    Resources::clear_fonts();
 
     if(not state_stack.empty())
       get_current_state().resume();

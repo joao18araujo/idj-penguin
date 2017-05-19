@@ -10,6 +10,8 @@
 #include "Penguins.h"
 #include "Collision.h"
 #include "TitleState.h"
+#include "StateData.h"
+#include "EndState.h"
 
 #include <ctime>
 
@@ -23,6 +25,10 @@ StageState::StageState(){
   add_object(new Alien(512, 600, 6));
   add_object(new Alien(800, 540, 6));
   add_object(new Alien(0, 0, 6));
+  add_object(new Alien(1000, 100, 6));
+  add_object(new Alien(300, 0, 6));
+  n_aliens = 5;
+
   add_object(new Penguins(704, 640));
 
   music = new Music("stageState.ogg");
@@ -49,13 +55,9 @@ void StageState::update(float delta){
     return;
   }
 
-  // if(inputManager.key_press(SDLK_SPACE)){
-  //   int x = inputManager.get_mouse_x() - Camera::pos[LAYER].x;
-  //   int y = inputManager.get_mouse_y() - Camera::pos[LAYER].y;
-  //   add_object(x, y);
-  // }
-
   update_array(delta);
+
+  count_deaths();
 }
 
 void StageState::load_assets(){
@@ -72,19 +74,30 @@ void StageState::render(){
 }
 
 void StageState::pause(){
-  //nothing TODO
+
 }
 
 void StageState::resume(){
-  //nothing TODO
+
 }
 
-//
-// void State::add_object(float mx, float my){
-//   float angle = 2 * 3.14159265358979 * (rand()%360) / 360;
-//
-//   Vector vector(mx + 200, my);
-//   vector.rotate(Vector(mx, my), angle);
-//
-//   object_array.emplace_back(new Face(vector.x, vector.y));
-// }
+void StageState::count_deaths(){
+  bool aliens = false, penguins = false;
+  for(auto & object : object_array){
+    if(object->is("alien")) aliens = true;
+    else if(object->is("penguins")) penguins = true;
+  }
+
+  StateData data;
+  if(not penguins){
+    m_quit_requested = true;
+    data.player_victory = false;
+    Game::get_instance().push(new EndState(data));
+    return;
+  }else if(not aliens){
+    m_quit_requested = true;
+    data.player_victory = true;
+    Game::get_instance().push(new EndState(data));
+    return;
+  }
+}

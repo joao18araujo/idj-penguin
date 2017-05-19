@@ -23,6 +23,7 @@ private:
   TileSet * tile_set;
   TileMap * tile_map;
   Music * music;
+  int n_aliens;
 
 public:
   StageState();
@@ -35,6 +36,7 @@ public:
   void resume();
 
   void load_assets();
+  void count_deaths();
 };
 
 #endif

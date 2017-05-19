@@ -7,6 +7,10 @@
 #define SHADED Text::TextStyle::SHADED
 #define BLENDED Text::TextStyle::BLENDED
 
+Text::Text(){
+  texture = nullptr;
+}
+
 Text::Text(string cfont_file, int cfont_size, TextStyle cstyle, string ctext, SDL_Color ccolor, int x, int y){
   font_size = cfont_size;
   style = cstyle;
@@ -17,6 +21,7 @@ Text::Text(string cfont_file, int cfont_size, TextStyle cstyle, string ctext, SD
   texture = nullptr;
   open(cfont_file, font_size);
   remake_texture();
+  set_pos(x, y, true, true);
 }
 
 Text::~Text(){
@@ -26,12 +31,12 @@ Text::~Text(){
 }
 
 void Text::render(int camera_x, int camera_y){
-  SDL_Rect dstrect = SDL_Rect{camera_x, camera_y, clip_rect.w, clip_rect.h};
+  SDL_Rect dstrect = SDL_Rect{(int) box.get_x() + camera_x, (int) box.get_y() + camera_y, clip_rect.w, clip_rect.h};
 
   int render_copy = SDL_RenderCopy(Game::get_instance().get_renderer(), texture,
     &clip_rect, &dstrect);
   if(render_copy){
-      printf("Render: %s\n", SDL_GetError());
+      printf("Render text: %s\n", SDL_GetError());
       exit(-1);
     }
 }
@@ -68,7 +73,6 @@ void Text::remake_texture(){
   }
 
   SDL_Surface * surface;
-  SDL_Color black = {0, 0, 0, 255};
   switch(style){
     case SOLID:
 
@@ -78,7 +82,7 @@ void Text::remake_texture(){
     case SHADED:
 
 
-    surface = TTF_RenderText_Shaded(font.get(), text.c_str(), color, black);
+    surface = TTF_RenderText_Shaded(font.get(), text.c_str(), color, {0, 0, 0, 255});
 
     break;
     case BLENDED:
